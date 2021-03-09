@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>YouTube Chat Looks Better</title>
+    <link rel="stylesheet" href="./styleIndex.css" />
+  </head>
+  <body>
+    <div class="glow">
+      <div class="leftGlow"></div>
+      <div class="rightTopGlow"></div>
+      <div class="rightBottomGlow"></div>
+    </div>
+    <main>
+      <!-- <img
+        src="glow.svg"
+        alt="Glowing universe"
+        class="position-absolute home-hero-glow events-none z-1"
+      /> -->
+      <div class="content-wrapper">
+        <div class="content">
+          <div class="forms-wrapper">
+            <div class="error"></div>
+            <form id="youtube">
+              <input
+                type="text"
+                id="typelink"
+                name="youtube-link"
+                placeholder="https://www.youtube.com/wa...."
+                autofocus
+              />
+              <input type="submit" value=" >> " />
+            </form>
+          </div>
+          <div id="embed">
+            <a class="back" id="link"></a>
+            <!-- <button class="back">Go Back</button> -->
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>

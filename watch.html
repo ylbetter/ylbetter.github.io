@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>YouTube Chat Looks Better</title>
+  <link rel="stylesheet" href="styleWatch.css" />
+  <script src="watch.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+  <script>
+    var isResizing = false,
+      lastDownX = 0;
+
+    $(function () {
+      var container = $("#container"),
+        left = $("#left_panel"),
+        right = $("#right_panel"),
+        handle = $("#drag");
+
+      handle.on("mousedown", function (e) {
+        isResizing = true;
+        lastDownX = e.clientX;
+      });
+
+      $(document)
+        .on("mousemove", function (e) {
+          // we don't want to do anything if we aren't resizing.
+          if (!isResizing) return;
+
+          var offsetRight =
+            container.width() - (e.clientX - container.offset().left);
+
+          left.css("right", offsetRight);
+          right.css("width", offsetRight);
+        })
+        .on("mouseup", function (e) {
+          // stop resizing
+          isResizing = false;
+        })
+        .on("dblclick", function (e) {
+          left.css("right", 300);
+          right.css("width", 300);
+          isResizing = false;
+        });
+    });
+    // Control Volume
+    function updateTextInput(val) {
+          document.getElementById('textInput').textContent=val; 
+        }
+  </script>
+  <div id="container">
+    <!-- Back -->
+    <a href="/" title="Back" class="homepage"></a>
+    <!-- Back to YouTube -->
+    <a href="https://youtube.com" title="Back to YouTube" class="back2youtube"></a>
+    <!--  -->
+    <div id="left_panel">
+      <!-- Start Video -->
+      <div class="video">
+        <!-- Range-Volume -->
+        <div class="ControlBtns">
+          <input id="YouTube-player-volume" class="YouTube-volume-input" type="range" min="0" max="100" title="Volume"
+            oninput="youTubePlayerVolumeChange(this.value);updateTextInput(this.value);" />
+            <span type="text" id="textInput">Vol</span>
+          </div>
+          <!--  -->
+        <div id="ytplayer"></div>
+        <!--  -->
+      </div>
+    </div>
+    <!-- End Video -->
+  </div>
+  <div id="right_panel">
+    <!-- Start Chat -->
+    <div title="
+Left mouse btn and drag (Mouse Wheels) — resizing.
+Double Click — position by default.
+        " id="drag"></div>
+    <div class="chat">
+      <script>
+        const chat =
+          "https://www.youtube.com/live_chat?v=" +
+          VIDEO_ID +
+          "&embed_domain=" +
+          window.location.hostname;
+        //
+        document.write(
+          " <iframe id='ytchat' name='frame' src='" +
+          chat +
+          "'frameborder='0' ></iframe>"
+        );
+      </script>
+    </div>
+    <!-- End Chat -->
+  </div>
+  <!-- hideChatBtn -->
+  <button onclick="hideChatBtn()" class="hideChatBtn" title="Hide Chat"></button>
+  <!--  -->
+  </div>
+</body>
+</html>

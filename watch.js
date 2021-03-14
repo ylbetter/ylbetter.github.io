@@ -323,7 +323,7 @@ function youTubePlayerVolumeChange(volume) {
 //
 //
 function hideChatBtn() {
-  var ytchat = document.getElementById("ytchat"),
+  var ytchat = document.getElementById("right_panel"),
     leftpanel = document.getElementById("left_panel"),
     drag = document.getElementById("drag");
   if (ytchat.style.display === "none") {

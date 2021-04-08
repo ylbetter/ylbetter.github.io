@@ -73,6 +73,7 @@ iframe#ytchat{
 .chat {
     padding-left: 5px;
     padding-right: 5px;
+    min-width: 302px;
 }
 
 /* 

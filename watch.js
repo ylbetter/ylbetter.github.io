@@ -342,3 +342,11 @@ setTimeout(() => {
   hideChatBtn();
   console.log("[console > watch.js] Page load");
 }, 1000);
+
+// 
+
+var url = 'https://www.youtube.com/live_chat' + window.location.search ;
+function popupChat() { 
+  window.open(url, 'popup', 'width=400,height=850.78');
+  hideChatBtn();
+}

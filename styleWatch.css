@@ -42,18 +42,18 @@ html body{
 }
 
 #drag {
-    position: absolute;
-    left: -50px;
-    top: 5%;
-    bottom: 0;
-    width: 65px;
-    height: 73%;
-    cursor: w-resize;
-    background: #00000048;
-    filter: blur(40px);
-    opacity: 0;
-    transition: .3s opacity;
-    border-radius: 20px;
+  position: absolute;
+  left: -33px;
+  top: 5%;
+  bottom: 0px;
+  width: 70px;
+  height: 73%;
+  cursor: w-resize;
+  background: rgba(0, 0, 0, 0.282);
+  filter: blur(40px);
+  opacity: 0;
+  transition: opacity 0.3s ease 0s;
+  border-radius: 20px;
 }
 
 #drag:hover{
@@ -123,6 +123,32 @@ iframe#ytchat{
 }
 
 .hideChatBtn:hover {
+  opacity: 0.7;
+}
+
+/* 
+     Popup chat btn     
+*/
+.PopupChatBtn {
+  position: absolute;
+  z-index: 15;
+  width: 50px;
+  max-width: 90px;
+  height: 70px;
+  background: #1488;
+  cursor: pointer;
+  bottom: 0;
+  top: -50px;
+  right: 100px;
+  border: 0;
+  border-radius: 20px;
+  opacity: 0;
+  transition: 0.7s;
+  outline: 0;
+  box-shadow: 0px 10px 20px #00000012;
+}
+
+.PopupChatBtn:hover {
   opacity: 0.7;
 }
 

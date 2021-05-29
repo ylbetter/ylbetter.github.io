@@ -7,6 +7,10 @@
   <meta name="description" content="Convenient viewing of live broadcasts on YouTube." />
   <title>YouTube Looks Better</title>
   <link rel="stylesheet" href="styleWatch.css" />
+
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	
+
   <script src="watch.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
@@ -64,7 +68,8 @@
       <div class="video">
         <!-- Range-Volume -->
         <div class="ControlBtns">
-          <input id="YouTube-player-volume" class="YouTube-volume-input" type="range" min="0" max="100" title="Volume"
+          <input id="YouTube-player-volume" class="YouTube-volume-input mdl-slider mdl-js-slider" type="range" min="0" max="100" title="Volume"
+
             oninput="youTubePlayerVolumeChange(this.value);updateTextInput(this.value);" />
           <span type="text" id="textInput">Vol</span>
         </div>

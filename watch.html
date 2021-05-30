@@ -12,10 +12,8 @@
     />
     <title>YouTube Looks Better</title>
     <link rel="stylesheet" href="styleWatch.css" />
-    <link
-      rel="stylesheet"
-      href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css"
-    />
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+
 
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
@@ -68,13 +66,9 @@
       </script>
       <div id="container">
         <!-- Back -->
-        <button href="/" title="Back" class="homepage"></button>
+        <input class="homepage" title="Back" type="button" onclick="location.href='/';"/>
         <!-- Back to YouTube -->
-        <button
-          href="https://youtube.com"
-          title="Back to YouTube"
-          class="back2youtube"
-        ></button>
+        <input class="back2youtube" title="Back to YouTube" type="button" onclick="location.href='https://youtube.com';"/>
         <!--  -->
         <div id="left_panel">
           <!-- Start Video -->
@@ -153,7 +147,7 @@ Double Click — position by default.
           <div id="viewersCount">Loading...</div>
         </div>
 
-        <div class="views" title="Просмотров за всё время">
+        <div class="views" title="Просмотров на видео с момента публикации">
           <p class="mdi mdi-account-multiple"></p>
           <div id="viewCount">Loading...</div>
         </div>
@@ -168,19 +162,53 @@ Double Click — position by default.
           <div id="dislikeCount">Loading...</div>
         </div>
       </div>
+      
+      <!--  -->
+      <div class="flx">
+      <div class="CHinfo">
+          <img id="CHavatar"></img>
+          <!-- IconFlx -->
+          <div class="iconFLX">
+            <div id="CHchannelName"></div>
 
-      <div class="StartTime">
-        <h4 class="mTB-5">Трансляция запланирована</h4>
-        <div class="timeIcon">
-          <p class="mdi mdi-clock"></p>
-          <div id="scheduledStartTime">Loading...</div>
+            <div class="flxText">
+              <div class="CHicon" title="Количество подписчиков">
+                <p class="mdi mdi-youtube-subscription"></p>
+              <div id="CHsubscribersCountAPI"></div>
+              </div>
+              <div class="CHicon" title="Количество загруженных видео">
+              <p class="mdi mdi-upload"></p>
+              <div id="CHvideoCount"></div>
+              </div>
+              <div class="CHicon" title="Количество просмотров на всех видео">
+              <p class="mdi mdi-eye"></p>
+              <div id="CHviewCount"></div>
+              </div>
+            </div>
+
+          </div>
+          <!--  -->
         </div>
-        <h4 class="mTB-5">Трансляция началась</h4>
-        <div class="timeIcon">
+        
+        <div class="StartTime">
+          <h4 class="mTB-5">Трансляция запланирована</h4>
+          <div class="timeIcon">
+            <p class="mdi mdi-clock"></p>
+            <div id="scheduledStartTime">Loading...</div>
+          </div>
+          <h4 class="mTB-5">Трансляция началась</h4>
+          <div class="timeIcon">
+            <p class="mdi mdi-clock"></p>
+            <div id="actualStartTime">Loading...</div>
+          </div>
+          <h4 class="mTB-5">Видео опубликовано</h4>
+          <div class="timeIcon">
           <p class="mdi mdi-clock"></p>
-          <div id="actualStartTime">Loading...</div>
+          <div id="publishedAt">Loading...</div>
+          </div>
         </div>
       </div>
+      <!--  -->
 
       <!-- <h4>Описание</h4> -->
       <div id="description">Loading...</div>
@@ -203,8 +231,7 @@ Double Click — position by default.
         let data = await request.json().catch(() => {});
 
         if (!data.errors) {
-          console.log(data);
-
+          // console.log(data);
           // Миниатюра
           //document.getElementById("YTthnail").src = data.items[0].snippet.thumbnails.maxres.url;
           // Название трансляции
@@ -225,6 +252,11 @@ Double Click — position by default.
           scheduledStartTime.innerHTML = new Date(
             data.items[0].liveStreamingDetails.scheduledStartTime
           ).toLocaleString();
+          // Публикация
+          publishedAt.innerHTML = new Date(
+            data.items[0].snippet.publishedAt
+          ).toLocaleString();
+          
           // Просмотров всего
           viewCount.innerHTML = data.items[0].statistics.viewCount.replace(
             /(\d)(?=(\d\d\d)+([^\d]|$))/g,
@@ -241,6 +273,41 @@ Double Click — position by default.
               /(\d)(?=(\d\d\d)+([^\d]|$))/g,
               "$1 "
             );
+          // Channel ID
+          var channelID = data.items[0].snippet.channelId;
+
+          fetch(
+            `https://beta.mixerno.space/api/youtube-subscriber-counter/channel/` +
+              channelID
+          )
+            .then((res) => res.json())
+            .then((out) => {
+              // console.log(out);
+              // Имя канала
+              CHchannelName.innerHTML = out.userList[0].user.name;
+              // Кол-во подписчиков на канале
+              CHsubscribersCountAPI.innerHTML =
+                out.userList[0].stats.subscriberCountAPI.replace(
+              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+              "$1 "
+            );
+              // Кол-во видео на канале
+              CHvideoCount.innerHTML = out.userList[0].stats.videoCount.replace(
+              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+              "$1 "
+            );
+              // Просмотров на канале
+              CHviewCount.innerHTML = out.userList[0].stats.viewCount.replace(
+              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+              "$1 "
+            );
+              // Аватар канала
+              document.getElementById("CHavatar").src =
+                out.userList[0].user.banner;
+            })
+            .catch((err) => {
+              throw err;
+            });
         }
       }
 
@@ -253,7 +320,7 @@ Double Click — position by default.
         });
       }
 
-      setInterval(getViews, 2000);
+      setInterval(getViews, 10000);
     </script>
   </body>
 </html>

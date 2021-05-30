@@ -1,114 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="Keywords"
+      content="YouTube, YouTube Looks Better, Live stream, streaming, livestream"
+    />
+    <meta
+      name="description"
+      content="Convenient viewing of live broadcasts on YouTube."
+    />
+    <title>YouTube Looks Better</title>
+    <link rel="stylesheet" href="styleWatch.css" />
+    <link
+      rel="stylesheet"
+      href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css"
+    />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="Keywords" content="YouTube, YouTube Looks Better, Live stream, streaming, livestream" />
-  <meta name="description" content="Convenient viewing of live broadcasts on YouTube." />
-  <title>YouTube Looks Better</title>
-  <link rel="stylesheet" href="styleWatch.css" />
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
-	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-	
+    <script src="watch.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  </head>
 
-  <script src="watch.js"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-</head>
+  <body>
+    <div class="top">
+      <script>
+        var isResizing = false,
+          lastDownX = 0;
 
-<body>
-  <script>
-    var isResizing = false,
-      lastDownX = 0;
+        $(function () {
+          var container = $("#container"),
+            left = $("#left_panel"),
+            right = $("#right_panel"),
+            handle = $("#drag");
 
-    $(function () {
-      var container = $("#container"),
-        left = $("#left_panel"),
-        right = $("#right_panel"),
-        handle = $("#drag");
+          handle.on("mousedown", function (e) {
+            isResizing = true;
+            lastDownX = e.clientX;
+          });
 
-      handle.on("mousedown", function (e) {
-        isResizing = true;
-        lastDownX = e.clientX;
-      });
+          $(document)
+            .on("mousemove", function (e) {
+              // we don't want to do anything if we aren't resizing.
+              if (!isResizing) return;
 
-      $(document)
-        .on("mousemove", function (e) {
-          // we don't want to do anything if we aren't resizing.
-          if (!isResizing) return;
+              var offsetRight =
+                container.width() - (e.clientX - container.offset().left);
 
-          var offsetRight =
-            container.width() - (e.clientX - container.offset().left);
-
-          left.css("right", offsetRight);
-          right.css("width", offsetRight);
-        })
-        .on("mouseup", function (e) {
-          // stop resizing
-          isResizing = false;
-        })
-        .on("dblclick", function (e) {
-          left.css("right", 300);
-          right.css("width", 300);
-          isResizing = false;
+              left.css("right", offsetRight);
+              right.css("width", offsetRight);
+            })
+            .on("mouseup", function (e) {
+              // stop resizing
+              isResizing = false;
+            })
+            .on("dblclick", function (e) {
+              left.css("right", 300);
+              right.css("width", 300);
+              isResizing = false;
+            });
         });
-    });
-    // Control Volume
-    function updateTextInput(val) {
-      document.getElementById('textInput').textContent = val;
-    }
-  </script>
-  <div id="container">
-    <!-- Back -->
-    <a href="/" title="Back" class="homepage"></a>
-    <!-- Back to YouTube -->
-    <a href="https://youtube.com" title="Back to YouTube" class="back2youtube"></a>
-    <!--  -->
-    <div id="left_panel">
-      <!-- Start Video -->
-      <div class="video">
-        <!-- Range-Volume -->
-        <div class="ControlBtns">
-          <input id="YouTube-player-volume" class="YouTube-volume-input mdl-slider mdl-js-slider" type="range" min="0" max="100" title="Volume"
-
-            oninput="youTubePlayerVolumeChange(this.value);updateTextInput(this.value);" />
-          <span type="text" id="textInput">Vol</span>
+        // Control Volume
+        function updateTextInput(val) {
+          document.getElementById("textInput").textContent = val;
+        }
+      </script>
+      <div id="container">
+        <!-- Back -->
+        <button href="/" title="Back" class="homepage"></button>
+        <!-- Back to YouTube -->
+        <button
+          href="https://youtube.com"
+          title="Back to YouTube"
+          class="back2youtube"
+        ></button>
+        <!--  -->
+        <div id="left_panel">
+          <!-- Start Video -->
+          <div class="video">
+            <!-- Range-Volume -->
+            <div class="ControlBtns">
+              <input
+                id="YouTube-player-volume"
+                class="YouTube-volume-input mdl-slider mdl-js-slider"
+                type="range"
+                min="0"
+                max="100"
+                title="Volume"
+                oninput="youTubePlayerVolumeChange(this.value);updateTextInput(this.value);"
+              />
+              <span type="text" id="textInput">Vol</span>
+            </div>
+            <!--  -->
+            <div id="ytplayer"></div>
+            <!--  -->
+          </div>
         </div>
-        <!--  -->
-        <div id="ytplayer"></div>
-        <!--  -->
+        <!-- End Video -->
       </div>
-    </div>
-    <!-- End Video -->
-  </div>
-  <div id="right_panel">
-    <!-- Start Chat -->
-    <div title="
+      <div id="right_panel">
+        <!-- Start Chat -->
+        <div
+          title="
 Left mouse btn and drag (Mouse Wheels) — resizing.
 Double Click — position by default.
-        " id="drag"></div>
-    <div class="chat">
-      <script>
-        const chat =
-          "https://www.youtube.com/live_chat?v=" +
-          VIDEO_ID +
-          "&embed_domain=" +
-          window.location.hostname;
-        //
-        document.write(
-          " <iframe id='ytchat' name='frame' src='" +
-          chat +
-          "'frameborder='0' ></iframe>"
-        );
-      </script>
+        "
+          id="drag"
+        ></div>
+        <div class="chat">
+          <script>
+            const chat =
+              "https://www.youtube.com/live_chat?v=" +
+              VIDEO_ID +
+              "&embed_domain=" +
+              window.location.hostname;
+            //
+            document.write(
+              " <iframe id='ytchat' name='frame' src='" +
+                chat +
+                "'frameborder='0' ></iframe>"
+            );
+          </script>
+        </div>
+        <!-- End Chat -->
+      </div>
+      <!-- hideChatBtn -->
+      <button
+        onclick="hideChatBtn()"
+        class="hideChatBtn"
+        title="Hide Chat"
+      ></button>
+      <!-- Popup chat -->
+      <button
+        onclick="popupChat()"
+        class="PopupChatBtn"
+        title="Popup Chat"
+      ></button>
     </div>
-    <!-- End Chat -->
-  </div>
-  <!-- hideChatBtn -->
-  <button onclick="hideChatBtn()" class="hideChatBtn" title="Hide Chat"></button>
-  <!-- Popup chat -->
-  <button onclick="popupChat()" class="PopupChatBtn" title="Popup Chat"></button>
-  <!--  -->
-  </div>
-</body>
 
+    <!--  -->
+
+    <div class="VideoInfo">
+      <!-- <img id="YTthnail" /> -->
+
+      <!-- <h4>Название трансляции</h4> -->
+      <div id="title">Loading...</div>
+
+      <div class="baseInfo">
+        <div class="viewers" title="Сейчас смотрят">
+          <p class="mdi mdi-account" style="font-size: 39px"></p>
+          <div id="viewersCount">Loading...</div>
+        </div>
+
+        <div class="views" title="Просмотров за всё время">
+          <p class="mdi mdi-account-multiple"></p>
+          <div id="viewCount">Loading...</div>
+        </div>
+
+        <div class="like" title="Лайков">
+          <p class="mdi mdi-thumb-up"></p>
+          <div id="likesCount">Loading...</div>
+        </div>
+
+        <div class="disLike" title="Дизлайков">
+          <p class="mdi mdi-thumb-down"></p>
+          <div id="dislikeCount">Loading...</div>
+        </div>
+      </div>
+
+      <div class="StartTime">
+        <h4 class="mTB-5">Трансляция запланирована</h4>
+        <div class="timeIcon">
+          <p class="mdi mdi-clock"></p>
+          <div id="scheduledStartTime">Loading...</div>
+        </div>
+        <h4 class="mTB-5">Трансляция началась</h4>
+        <div class="timeIcon">
+          <p class="mdi mdi-clock"></p>
+          <div id="actualStartTime">Loading...</div>
+        </div>
+      </div>
+
+      <!-- <h4>Описание</h4> -->
+      <div id="description">Loading...</div>
+      <div class="skip"></div>
+    </div>
+
+    <script>
+      var countlength, likes, views, viewsA;
+      var param = window.location.search.split("?v=");
+      var video_id = param[1];
+      getViews();
+      function updatePage() {
+        location.href = `?id=${video_id}`;
+      }
+      async function getViews() {
+        let request = await fetch(
+          `https://mixerno.space/api/yt/video/${video_id}`,
+          { mode: "cors" }
+        );
+        let data = await request.json().catch(() => {});
+
+        if (!data.errors) {
+          console.log(data);
+
+          // Миниатюра
+          //document.getElementById("YTthnail").src = data.items[0].snippet.thumbnails.maxres.url;
+          // Название трансляции
+          title.innerHTML = data.items[0].snippet.title;
+          // Зрителей
+          viewersCount.innerHTML =
+            data.items[0].liveStreamingDetails.concurrentViewers;
+          // Описание
+          description.innerHTML = urlify(data.items[0].snippet.description);
+          // Время начала трансляции
+          actualStartTime.innerHTML = new Date(
+            data.items[0].liveStreamingDetails.actualStartTime
+          ).toLocaleString();
+          // Трансляция запланирована
+          scheduledStartTime.innerHTML = new Date(
+            data.items[0].liveStreamingDetails.scheduledStartTime
+          ).toLocaleString();
+          // Просмотров всего
+          viewCount.innerHTML = data.items[0].statistics.viewCount;
+          // Лайков
+          likesCount.innerHTML = data.items[0].statistics.likeCount;
+          // Дизлайков
+          dislikeCount.innerHTML = data.items[0].statistics.dislikeCount;
+        }
+      }
+
+      function urlify(text) {
+        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        //var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function (url, b, c) {
+          var url2 = c == "www." ? "http://" + url : url;
+          return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
+        });
+      }
+      setInterval(getViews, 2000);
+    </script>
+  </body>
 </html>

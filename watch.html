@@ -211,7 +211,10 @@ Double Click — position by default.
           title.innerHTML = data.items[0].snippet.title;
           // Зрителей
           viewersCount.innerHTML =
-            data.items[0].liveStreamingDetails.concurrentViewers;
+            data.items[0].liveStreamingDetails.concurrentViewers.replace(
+              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+              "$1 "
+            );
           // Описание
           description.innerHTML = urlify(data.items[0].snippet.description);
           // Время начала трансляции
@@ -223,11 +226,21 @@ Double Click — position by default.
             data.items[0].liveStreamingDetails.scheduledStartTime
           ).toLocaleString();
           // Просмотров всего
-          viewCount.innerHTML = data.items[0].statistics.viewCount;
+          viewCount.innerHTML = data.items[0].statistics.viewCount.replace(
+            /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+            "$1 "
+          );
           // Лайков
-          likesCount.innerHTML = data.items[0].statistics.likeCount;
+          likesCount.innerHTML = data.items[0].statistics.likeCount.replace(
+            /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+            "$1 "
+          );
           // Дизлайков
-          dislikeCount.innerHTML = data.items[0].statistics.dislikeCount;
+          dislikeCount.innerHTML =
+            data.items[0].statistics.dislikeCount.replace(
+              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+              "$1 "
+            );
         }
       }
 
@@ -239,6 +252,7 @@ Double Click — position by default.
           return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
         });
       }
+
       setInterval(getViews, 2000);
     </script>
   </body>

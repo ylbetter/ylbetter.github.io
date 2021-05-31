@@ -12,12 +12,17 @@
     />
     <title>YouTube Looks Better</title>
     <link rel="stylesheet" href="styleWatch.css" />
+    <!--      -->
     <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
-
-
+    <link
+    rel="stylesheet"
+    href="odometer-theme-default.css"
+  />
+    <!--  -->
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
+    <!--  -->
     <script src="watch.js"></script>
+    <script src="odometer.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   </head>
 
@@ -138,58 +143,65 @@ Double Click — position by default.
     <div class="VideoInfo">
       <!-- <img id="YTthnail" /> -->
 
-      <!-- <h4>Название трансляции</h4> -->
-      <div id="title">Loading...</div>
+      <div class="title">
+        <p class="mdi mdi-text"></p>
+        <div id="title">Loading...</div>
+      </div>
 
       <div class="baseInfo">
-        <div class="viewers" title="Сейчас смотрят">
-          <p class="mdi mdi-account" style="font-size: 39px"></p>
-          <div id="viewersCount">Loading...</div>
+
+        <div class="percent">
+          <div class="lf">
+            <div class="like" title="Лайков">
+              <p class="mdi mdi-thumb-up"></p>
+              <div id="likesCount" class="odometer">Loading...</div>
+            </div>
+            <div class="disLike" title="Дизлайков">
+              <p class="mdi mdi-thumb-down"></p>
+              <div id="dislikeCount" class="odometer">Loading...</div>
+            </div>
+          </div>
+          <!--  -->
+        <progress max="100" id="likeProgress" title="Процент лайков"></progress>
+        <!--  -->
         </div>
 
-        <div class="views" title="Просмотров на видео с момента публикации">
-          <p class="mdi mdi-account-multiple"></p>
-          <div id="viewCount">Loading...</div>
-        </div>
+          <div class="viewers" title="Сейчас смотрят">
+            <p class="mdi mdi-account" style="font-size: 39px"></p>
+            <div id="viewersCount" class="odometer">Loading...</div>
+          </div>
+  
+          <div class="views" title="Просмотров на видео с момента публикации">
+            <p class="mdi mdi-account-multiple"></p>
+            <div id="viewCount" class="odometer">Loading...</div>
+          </div>
 
-        <div class="like" title="Лайков">
-          <p class="mdi mdi-thumb-up"></p>
-          <div id="likesCount">Loading...</div>
-        </div>
-
-        <div class="disLike" title="Дизлайков">
-          <p class="mdi mdi-thumb-down"></p>
-          <div id="dislikeCount">Loading...</div>
-        </div>
       </div>
-      
       <!--  -->
       <div class="flx">
       <div class="CHinfo">
           <img id="CHavatar"></img>
           <!-- IconFlx -->
           <div class="iconFLX">
-            <div id="CHchannelName"></div>
+            <div id="CHchannelName">Loading...</div>
 
             <div class="flxText">
               <div class="CHicon" title="Количество подписчиков">
                 <p class="mdi mdi-youtube-subscription"></p>
-              <div id="CHsubscribersCountAPI"></div>
+              <div id="CHsubscribersCountAPI" class="odometer">Loading...</div>
               </div>
               <div class="CHicon" title="Количество загруженных видео">
               <p class="mdi mdi-upload"></p>
-              <div id="CHvideoCount"></div>
+              <div id="CHvideoCount" class="odometer">Loading...</div>
               </div>
               <div class="CHicon" title="Количество просмотров на всех видео">
               <p class="mdi mdi-eye"></p>
-              <div id="CHviewCount"></div>
+              <div id="CHviewCount" class="odometer">Loading...</div>
               </div>
             </div>
-
           </div>
           <!--  -->
         </div>
-        
         <div class="StartTime">
           <h4 class="mTB-5">Трансляция запланирована</h4>
           <div class="timeIcon">
@@ -209,12 +221,14 @@ Double Click — position by default.
         </div>
       </div>
       <!--  -->
-
-      <!-- <h4>Описание</h4> -->
       <div id="description">Loading...</div>
-      <div class="skip"></div>
+      <div class="footer">
+        &copy; 8 Feb 2021 — <span id="copyright">
+            <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+        </span><a style="color: gray;" href="https://ylbetter.github.io" target="_blank"> YLBetter</a>
     </div>
 
+    </div>
     <script>
       var countlength, likes, views, viewsA;
       var param = window.location.search.split("?v=");
@@ -232,16 +246,13 @@ Double Click — position by default.
 
         if (!data.errors) {
           // console.log(data);
-          // Миниатюра
+          // Миниатюра видео
           //document.getElementById("YTthnail").src = data.items[0].snippet.thumbnails.maxres.url;
           // Название трансляции
           title.innerHTML = data.items[0].snippet.title;
           // Зрителей
           viewersCount.innerHTML =
-            data.items[0].liveStreamingDetails.concurrentViewers.replace(
-              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
-              "$1 "
-            );
+            data.items[0].liveStreamingDetails.concurrentViewers;
           // Описание
           description.innerHTML = urlify(data.items[0].snippet.description);
           // Время начала трансляции
@@ -256,26 +267,38 @@ Double Click — position by default.
           publishedAt.innerHTML = new Date(
             data.items[0].snippet.publishedAt
           ).toLocaleString();
-          
           // Просмотров всего
-          viewCount.innerHTML = data.items[0].statistics.viewCount.replace(
-            /(\d)(?=(\d\d\d)+([^\d]|$))/g,
-            "$1 "
-          );
+          viewCount.innerHTML = data.items[0].statistics.viewCount;
           // Лайков
-          likesCount.innerHTML = data.items[0].statistics.likeCount.replace(
-            /(\d)(?=(\d\d\d)+([^\d]|$))/g,
-            "$1 "
-          );
+          likesCount.innerHTML = data.items[0].statistics.likeCount;
           // Дизлайков
           dislikeCount.innerHTML =
-            data.items[0].statistics.dislikeCount.replace(
-              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
-              "$1 "
-            );
+            data.items[0].statistics.dislikeCount;
+
+
+            document.title = data.items[0].snippet.title;
+          /*
+
+          Percent Likes
+
+          */
+          var like = data.items[0].statistics.likeCount;
+          var dislike = data.items[0].statistics.dislikeCount;
+          document.getElementById("likeProgress").value = Math.round(100 * like / (+like+ + +dislike));
+
+          /*
+          
+          Get Channel ID
+          
+          */
           // Channel ID
           var channelID = data.items[0].snippet.channelId;
 
+          /*
+
+          Start Channel Info 
+
+          */
           fetch(
             `https://beta.mixerno.space/api/youtube-subscriber-counter/channel/` +
               channelID
@@ -292,15 +315,9 @@ Double Click — position by default.
               "$1 "
             );
               // Кол-во видео на канале
-              CHvideoCount.innerHTML = out.userList[0].stats.videoCount.replace(
-              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
-              "$1 "
-            );
+              CHvideoCount.innerHTML = out.userList[0].stats.videoCount;
               // Просмотров на канале
-              CHviewCount.innerHTML = out.userList[0].stats.viewCount.replace(
-              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
-              "$1 "
-            );
+              CHviewCount.innerHTML = out.userList[0].stats.viewCount;
               // Аватар канала
               document.getElementById("CHavatar").src =
                 out.userList[0].user.avatar.high.url;
@@ -310,7 +327,6 @@ Double Click — position by default.
             });
         }
       }
-
       function urlify(text) {
         var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
         //var urlRegex = /(https?:\/\/[^\s]+)/g;
@@ -319,7 +335,6 @@ Double Click — position by default.
           return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
         });
       }
-
       setInterval(getViews, 10000);
     </script>
   </body>

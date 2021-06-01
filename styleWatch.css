@@ -45,6 +45,8 @@ Title
   border-radius: 10px;
   font-weight: bold;
   display: flex;
+
+  cursor: pointer;
 }
 
 div#title {
@@ -181,11 +183,13 @@ img#CHavatar {
   width: 157px;
   border-radius: 100px;
   margin-right: 15px;
+  cursor: pointer;
 }
 
 div#CHchannelName {
   font-size: 28px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .CHicon {
@@ -322,7 +326,7 @@ button{
 html body{
     margin: 0; height: 100%;
     background: #0d1117;
-    /* overflow: hidden; */
+    overflow-x: hidden;
 }
 
 a {

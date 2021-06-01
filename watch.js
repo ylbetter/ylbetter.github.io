@@ -350,3 +350,126 @@ function popupChat() {
   window.open(url, 'popup', 'width=400,height=850.78');
   hideChatBtn();
 }
+
+
+/*
+
+YouTube Counter
+
+*/
+
+
+var countlength, likes, views, viewsA;
+      var param = window.location.search.split("?v=");
+      var video_id = param[1];
+      getViews();
+      function updatePage() {
+        location.href = `?id=${video_id}`;
+      }
+      async function getViews() {
+        let request = await fetch(
+          `https://mixerno.space/api/yt/video/${video_id}`,
+          { mode: "cors" }
+        );
+        let data = await request.json().catch(() => {});
+
+        if (!data.errors) {
+          console.log(data);
+          // Миниатюра видео
+          //document.getElementById("YTthnail").src = data.items[0].snippet.thumbnails.maxres.url;
+          // Название трансляции
+          title.innerHTML = data.items[0].snippet.title;
+          // Зрителей
+          viewersCount.innerHTML =
+            data.items[0].liveStreamingDetails.concurrentViewers;
+          // Описание
+          description.innerHTML = urlify(data.items[0].snippet.description);
+          // Время начала трансляции
+          actualStartTime.innerHTML = new Date(
+            data.items[0].liveStreamingDetails.actualStartTime
+          ).toLocaleString();
+          // Трансляция запланирована
+          scheduledStartTime.innerHTML = new Date(
+            data.items[0].liveStreamingDetails.scheduledStartTime
+          ).toLocaleString();
+          // Публикация
+          publishedAt.innerHTML = new Date(
+            data.items[0].snippet.publishedAt
+          ).toLocaleString();
+          // Просмотров всего
+          viewCount.innerHTML = data.items[0].statistics.viewCount;
+          // Лайков
+          likesCount.innerHTML = data.items[0].statistics.likeCount;
+          // Дизлайков
+          dislikeCount.innerHTML =
+            data.items[0].statistics.dislikeCount;
+
+
+            document.title = data.items[0].snippet.title;
+          /*
+
+          Percent Likes
+
+          */
+          var like = data.items[0].statistics.likeCount;
+          var dislike = data.items[0].statistics.dislikeCount;
+          document.getElementById("likeProgress").value = Math.round(100 * like / (+like+ + +dislike));
+          /*
+          
+          Get Channel ID
+          
+          */
+          // Channel ID
+          channelID = data.items[0].snippet.channelId;
+          
+          /*
+
+          Start Channel Info 
+
+          */
+          fetch(
+            `https://beta.mixerno.space/api/youtube-subscriber-counter/channel/` +
+              channelID
+          )
+            .then((res) => res.json())
+            .then((out) => {
+              // console.log(out);
+              // Имя канала
+              CHchannelName.innerHTML = out.userList[0].user.name;
+              // Кол-во подписчиков на канале
+              CHsubscribersCountAPI.innerHTML =
+                out.userList[0].stats.subscriberCountAPI.replace(
+              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
+              "$1 "
+            );
+              // Кол-во видео на канале
+              CHvideoCount.innerHTML = out.userList[0].stats.videoCount;
+              // Просмотров на канале
+              CHviewCount.innerHTML = out.userList[0].stats.viewCount;
+              // Аватар канала
+              document.getElementById("CHavatar").src =
+                out.userList[0].user.avatar.high.url;
+            })
+            .catch((err) => {
+              throw err;
+            });
+        }
+}
+
+function CHredirect() {
+  window.open('https://www.youtube.com/channel/' + channelID);
+}
+    
+
+
+      function urlify(text) {
+        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        //var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function (url, b, c) {
+          var url2 = c == "www." ? "http://" + url : url;
+          return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
+        });
+      }
+setInterval(getViews, 10000);
+      
+

@@ -1,231 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="Keywords"
-      content="YouTube, YouTube Looks Better, Live stream, streaming, livestream"
-    />
-    <meta
-      name="description"
-      content="Convenient viewing of live broadcasts on YouTube."
-    />
-    <title>YouTube Looks Better</title>
-    <link rel="stylesheet" href="styleWatch.css" />
-    <!--      -->
-    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
-    <link
-    rel="stylesheet"
-    href="odometer-theme-default.css"
-  />
-    <!--  -->
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <!--  -->
-    <script src="watch.js"></script>
-    <script src="odometer.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  </head>
 
-  <body>
-    <div class="top">
-      <script>
-        var isResizing = false,
-          lastDownX = 0;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="Keywords" content="YouTube, YouTube Looks Better, Live stream, streaming, livestream" />
+  <meta name="description" content="Convenient viewing of live broadcasts on YouTube." />
+  <title>YouTube Looks Better</title>
+  <link rel="stylesheet" href="styleWatch.css" />
+  <!--      -->
+  <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="odometer-theme-default.css" />
+  <!--  -->
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <!--  -->
+  <script src="watch.js"></script>
+  <script src="odometer.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
 
-        $(function () {
-          var container = $("#container"),
-            left = $("#left_panel"),
-            right = $("#right_panel"),
-            handle = $("#drag");
+<body onload="chat()">
+  <span id="loading">Loading...</span>
+  <div class="top">
+    <script>
+      var isResizing = false,
+        lastDownX = 0;
 
-          handle.on("mousedown", function (e) {
-            isResizing = true;
-            lastDownX = e.clientX;
-          });
+      $(function () {
+        var container = $("#container"),
+          left = $("#left_panel"),
+          right = $("#right_panel"),
+          handle = $("#drag");
 
-          $(document)
-            .on("mousemove", function (e) {
-              // we don't want to do anything if we aren't resizing.
-              if (!isResizing) return;
-
-              var offsetRight =
-                container.width() - (e.clientX - container.offset().left);
-
-              left.css("right", offsetRight);
-              right.css("width", offsetRight);
-            })
-            .on("mouseup", function (e) {
-              // stop resizing
-              isResizing = false;
-            })
-            .on("dblclick", function (e) {
-              left.css("right", 300);
-              right.css("width", 300);
-              isResizing = false;
-            });
+        handle.on("mousedown", function (e) {
+          isResizing = true;
+          lastDownX = e.clientX;
         });
-        // Control Volume
-        function updateTextInput(val) {
-          document.getElementById("textInput").textContent = val;
-        }
-      </script>
-      <div id="container">
-        <!-- Back -->
-        <input class="homepage" title="Back" type="button" onclick="location.href='/';"/>
-        <!-- Back to YouTube -->
-        <input class="back2youtube" title="Back to YouTube" type="button" onclick="location.href='https://youtube.com';"/>
-        <!--  -->
-        <div id="left_panel">
-          <!-- Start Video -->
-          <div class="video">
-            <!-- Range-Volume -->
-            <div class="ControlBtns">
-              <input
-                id="YouTube-player-volume"
-                class="YouTube-volume-input mdl-slider mdl-js-slider"
-                type="range"
-                min="0"
-                max="100"
-                title="Volume"
-                oninput="youTubePlayerVolumeChange(this.value);updateTextInput(this.value);"
-              />
-              <span type="text" id="textInput">Vol</span>
-            </div>
-            <!--  -->
-            <div id="ytplayer"></div>
-            <!--  -->
+
+        $(document)
+          .on("mousemove", function (e) {
+            // we don't want to do anything if we aren't resizing.
+            if (!isResizing) return;
+
+            var offsetRight =
+              container.width() - (e.clientX - container.offset().left);
+
+            left.css("right", offsetRight);
+            right.css("width", offsetRight);
+          })
+          .on("mouseup", function (e) {
+            // stop resizing
+            isResizing = false;
+          })
+          .on("dblclick", function (e) {
+            left.css("right", 300);
+            right.css("width", 300);
+            isResizing = false;
+          });
+      });
+      // Control Volume
+      function updateTextInput(val) {
+        document.getElementById("textInput").textContent = val;
+      }
+    </script>
+    <div id="container">
+      <!-- Back -->
+      <input class="homepage" title="Back" type="button" onclick="location.href='/';" />
+      <!-- Back to YouTube -->
+      <input class="back2youtube" title="Back to YouTube" type="button"
+        onclick="location.href='https://youtube.com';" />
+      <!--  -->
+      <div id="left_panel">
+        <!-- Start Video -->
+        <div class="video">
+          <!-- Range-Volume -->
+          <div class="ControlBtns">
+            <input id="YouTube-player-volume" class="YouTube-volume-input mdl-slider mdl-js-slider" type="range" min="0"
+              max="100" title="Volume" oninput="youTubePlayerVolumeChange(this.value);updateTextInput(this.value);" />
+            <span type="text" id="textInput">Vol</span>
           </div>
+          <!--  -->
+          <div id="ytplayer"></div>
+          <!--  -->
         </div>
-        <!-- End Video -->
       </div>
-      <div id="right_panel">
-        <!-- Start Chat -->
-        <div
-          title="
+      <!-- End Video -->
+    </div>
+    <div id="right_panel">
+      <!-- Start Chat -->
+      <div title="
 Left mouse btn and drag (Mouse Wheels) — resizing.
 Double Click — position by default.
-        "
-          id="drag"
-        ></div>
-        <div class="chat">
-          <script>
-            const chat =
-              "https://www.youtube.com/live_chat?v=" +
-              VIDEO_ID +
-              "&embed_domain=" +
-              window.location.hostname;
-            //
-            document.write(
-              " <iframe id='ytchat' name='frame' src='" +
-                chat +
-                "'frameborder='0' ></iframe>"
-            );
-          </script>
-        </div>
-        <!-- End Chat -->
+        " id="drag"></div>
+      <div class="chat">
+        <iframe id='ytchat' name='frame' frameborder='0'></iframe>
       </div>
-      <!-- hideChatBtn -->
-      <button
-        onclick="hideChatBtn()"
-        class="hideChatBtn"
-        title="Hide Chat"
-      ></button>
-      <!-- Popup chat -->
-      <button
-        onclick="popupChat()"
-        class="PopupChatBtn"
-        title="Popup Chat"
-      ></button>
+      <!-- End Chat -->
+    </div>
+    <!-- hideChatBtn -->
+    <button onclick="hideChatBtn()" class="hideChatBtn" title="Hide Chat"></button>
+    <!-- Popup chat -->
+    <button onclick="popupChat()" class="PopupChatBtn" title="Popup Chat"></button>
+  </div>
+
+  <!--  -->
+
+  <div class="VideoInfo">
+    <div class="title" onclick="window.open('https://i.ytimg.com/vi/' + VIDEO_ID + '/maxresdefault_live.jpg')">
+      <p class="mdi mdi-text"></p>
+      <div id="title">Loading...</div>
     </div>
 
-    <!--  -->
+    <div class="baseInfo">
 
-    <div class="VideoInfo">
-      <div class="title" onclick="window.open('https://i.ytimg.com/vi/' + VIDEO_ID + '/maxresdefault_live.jpg')">
-        <p class="mdi mdi-text"></p>
-        <div id="title">Loading...</div>
-      </div>
-
-      <div class="baseInfo">
-
-        <div class="percent">
-          <div class="lf">
-            <div class="like" title="Лайков">
-              <p class="mdi mdi-thumb-up"></p>
-              <div id="likesCount" class="odometer">Loading...</div>
-            </div>
-            <div class="disLike" title="Дизлайков">
-              <p class="mdi mdi-thumb-down"></p>
-              <div id="dislikeCount" class="odometer">Loading...</div>
-            </div>
+      <div class="percent">
+        <div class="lf">
+          <div class="like" title="Лайков">
+            <p class="mdi mdi-thumb-up"></p>
+            <div id="likesCount" class="odometer">Loading...</div>
           </div>
-          <!--  -->
+          <div class="disLike" title="Дизлайков">
+            <p class="mdi mdi-thumb-down"></p>
+            <div id="dislikeCount" class="odometer">Loading...</div>
+          </div>
+        </div>
+        <!--  -->
         <progress max="100" id="likeProgress" title="Процент лайков"></progress>
         <!--  -->
-        </div>
-
-          <div class="viewers" title="Сейчас смотрят">
-            <p class="mdi mdi-account" style="font-size: 39px"></p>
-            <div id="viewersCount" class="odometer">Loading...</div>
-          </div>
-  
-          <div class="views" title="Просмотров на видео с момента публикации">
-            <p class="mdi mdi-account-multiple"></p>
-            <div id="viewCount" class="odometer">Loading...</div>
-          </div>
-
       </div>
-      <!--  -->
-      <div class="flx">
-      <div class="CHinfo">
-          <img id="CHavatar" onclick="CHredirect()"></img>
-          <!-- IconFlx -->
-          <div class="iconFLX">
-            <div id="CHchannelName" onclick="CHredirect()">Loading...</div>
 
-            <div class="flxText">
-              <div class="CHicon" title="Количество подписчиков">
-                <p class="mdi mdi-youtube-subscription"></p>
+      <div class="viewers" title="Сейчас смотрят">
+        <p class="mdi mdi-account" style="font-size: 39px"></p>
+        <div id="viewersCount" class="odometer">Loading...</div>
+      </div>
+
+      <div class="views" title="Просмотров на видео с момента публикации">
+        <p class="mdi mdi-account-multiple"></p>
+        <div id="viewCount" class="odometer">Loading...</div>
+      </div>
+
+      <div title="Длительность трансляции" id="YTinfo"></div>
+    </div>
+    <!--  -->
+    <!--  -->
+    <div class="flx">
+      <div class="CHinfo">
+        <img id="CHavatar" onclick="CHredirect()"></img>
+        <!-- IconFlx -->
+        <div class="iconFLX">
+          <div id="CHchannelName" onclick="CHredirect()">Loading...</div>
+
+          <div class="flxText">
+            <div class="CHicon" title="Количество подписчиков">
+              <p class="mdi mdi-youtube-subscription"></p>
               <div id="CHsubscribersCountAPI" class="odometer">Loading...</div>
-              </div>
-              <div class="CHicon" title="Количество загруженных видео">
+            </div>
+            <div class="CHicon" title="Количество загруженных видео">
               <p class="mdi mdi-upload"></p>
               <div id="CHvideoCount" class="odometer">Loading...</div>
-              </div>
-              <div class="CHicon" title="Количество просмотров на всех видео">
+            </div>
+            <div class="CHicon" title="Количество просмотров на всех видео">
               <p class="mdi mdi-eye"></p>
               <div id="CHviewCount" class="odometer">Loading...</div>
-              </div>
             </div>
           </div>
-          <!--  -->
         </div>
-        <div class="StartTime">
-          <h4 class="mTB-5">Трансляция запланирована</h4>
-          <div class="timeIcon">
-            <p class="mdi mdi-clock"></p>
-            <div id="scheduledStartTime">Loading...</div>
-          </div>
-          <h4 class="mTB-5">Трансляция началась</h4>
-          <div class="timeIcon">
-            <p class="mdi mdi-clock"></p>
-            <div id="actualStartTime">Loading...</div>
-          </div>
-          <h4 class="mTB-5">Видео опубликовано</h4>
-          <div class="timeIcon">
+        <!--  -->
+      </div>
+      <div class="StartTime">
+        <h4 class="mTB-5">Трансляция запланирована</h4>
+        <div class="timeIcon">
+          <p class="mdi mdi-clock"></p>
+          <div id="scheduledStartTime">Loading...</div>
+        </div>
+        <h4 class="mTB-5">Трансляция началась</h4>
+        <div class="timeIcon">
+          <p class="mdi mdi-clock"></p>
+          <div id="actualStartTime">Loading...</div>
+        </div>
+        <h4 class="mTB-5">Видео опубликовано</h4>
+        <div class="timeIcon">
           <p class="mdi mdi-clock"></p>
           <div id="publishedAt">Loading...</div>
-          </div>
         </div>
       </div>
-      <!--  -->
-      <div id="description">Loading...</div>
-      <div class="footer">
-        &copy; 8 Feb 2021 — <span id="copyright">
-            <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
-        </span><a style="color: gray;" href="https://ylbetter.github.io" target="_blank"> YLBetter</a>
-    </div>
 
     </div>
-  </body>
+    <!--  -->
+    <div id="description">Loading...</div>
+    <div class="footer">
+      &copy; 8 Feb 2021 — <span id="copyright">
+        <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>
+      </span><a style="color: gray;" href="https://ylbetter.github.io" target="_blank"> YLBetter</a>
+    </div>
+
+  </div>
+</body>
+
 </html>

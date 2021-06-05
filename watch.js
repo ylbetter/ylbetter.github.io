@@ -361,7 +361,7 @@ YouTube Counter
 
 var countlength, likes, views, viewsA;
       var param = window.location.search.split("?v=");
-      var video_id = param[1];
+      video_id = param[1];
       getViews();
       function updatePage() {
         location.href = `?id=${video_id}`;
@@ -438,10 +438,7 @@ var countlength, likes, views, viewsA;
               CHchannelName.innerHTML = out.userList[0].user.name;
               // Кол-во подписчиков на канале
               CHsubscribersCountAPI.innerHTML =
-                out.userList[0].stats.subscriberCountAPI.replace(
-              /(\d)(?=(\d\d\d)+([^\d]|$))/g,
-              "$1 "
-            );
+                out.userList[0].stats.subscriberCountAPI;
               // Кол-во видео на канале
               CHvideoCount.innerHTML = out.userList[0].stats.videoCount;
               // Просмотров на канале
@@ -459,17 +456,32 @@ var countlength, likes, views, viewsA;
 function CHredirect() {
   window.open('https://www.youtube.com/channel/' + channelID);
 }
-    
+
+function convertTime (t){
+  return parseInt(t/86400)+' days '+(new Date(t%86400*1000)).toUTCString().replace(/.*(\d{2}):(\d{2}):(\d{2}).*/, "$1:$2:$3");
+}
+
+function InfoYouTube() {
+  YTinfo.innerHTML = convertTime(youTubePlayer.getCurrentTime());
+}
 
 
-      function urlify(text) {
-        var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
-        //var urlRegex = /(https?:\/\/[^\s]+)/g;
-        return text.replace(urlRegex, function (url, b, c) {
-          var url2 = c == "www." ? "http://" + url : url;
-          return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
-        });
-      }
+function urlify(text) {
+  var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+  //var urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, function (url, b, c) {
+    var url2 = c == "www." ? "http://" + url : url;
+    return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
+  });
+}
+
+function chat() { 
+  document.getElementById("ytchat").src = "https://www.youtube.com/live_chat?v=" + video_id + "&embed_domain=" + window.location.hostname;
+  
+  setTimeout(() => {
+    document.getElementById("loading").remove()
+  }, 2000);
+}
+
 setInterval(getViews, 10000);
-      
-
+setInterval(InfoYouTube, 1000);

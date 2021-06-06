@@ -378,33 +378,41 @@ var countlength, likes, views, viewsA;
           // Миниатюра видео
           //document.getElementById("YTthnail").src = data.items[0].snippet.thumbnails.maxres.url;
           // Название трансляции
-          title.innerHTML = data.items[0].snippet.title;
+          document.getElementById("title").innerHTML = data.items[0].snippet.title;
+
           // Зрителей
-          viewersCount.innerHTML =
+          document.getElementById("viewersCount").innerHTML =
             data.items[0].liveStreamingDetails.concurrentViewers;
+          
           // Описание
-          description.innerHTML = urlify(data.items[0].snippet.description);
+          document.getElementById("description").innerHTML = urlify(data.items[0].snippet.description);
+
           // Время начала трансляции
-          actualStartTime.innerHTML = new Date(
+          document.getElementById("actualStartTime").innerHTML = new Date(
             data.items[0].liveStreamingDetails.actualStartTime
           ).toLocaleString();
+
           // Трансляция запланирована
-          scheduledStartTime.innerHTML = new Date(
+          document.getElementById("scheduledStartTime").innerHTML = new Date(
             data.items[0].liveStreamingDetails.scheduledStartTime
           ).toLocaleString();
+
           // Публикация
-          publishedAt.innerHTML = new Date(
+          document.getElementById("publishedAt").innerHTML = new Date(
             data.items[0].snippet.publishedAt
           ).toLocaleString();
+
           // Просмотров всего
-          viewCount.innerHTML = data.items[0].statistics.viewCount;
+          document.getElementById("viewCount").innerHTML = data.items[0].statistics.viewCount;
+
           // Лайков
-          likesCount.innerHTML = data.items[0].statistics.likeCount;
+          document.getElementById("likesCount").innerHTML = data.items[0].statistics.likeCount;
+
           // Дизлайков
-          dislikeCount.innerHTML =
+          document.getElementById("dislikeCount").innerHTML =
             data.items[0].statistics.dislikeCount;
 
-
+          
             document.title = data.items[0].snippet.title;
           /*
 
@@ -435,14 +443,13 @@ var countlength, likes, views, viewsA;
             .then((out) => {
               // console.log(out);
               // Имя канала
-              CHchannelName.innerHTML = out.userList[0].user.name;
+              document.getElementById("CHchannelName").innerHTML = out.userList[0].user.name;
               // Кол-во подписчиков на канале
-              CHsubscribersCountAPI.innerHTML =
-                out.userList[0].stats.subscriberCountAPI;
+              document.getElementById("CHsubscribersCountAPI").innerHTML = out.userList[0].stats.subscriberCountAPI;
               // Кол-во видео на канале
-              CHvideoCount.innerHTML = out.userList[0].stats.videoCount;
+              document.getElementById("CHvideoCount").innerHTML = out.userList[0].stats.videoCount;
               // Просмотров на канале
-              CHviewCount.innerHTML = out.userList[0].stats.viewCount;
+              document.getElementById("CHviewCount").innerHTML = out.userList[0].stats.viewCount;
               // Аватар канала
               document.getElementById("CHavatar").src =
                 out.userList[0].user.avatar.high.url;
@@ -458,7 +465,7 @@ function CHredirect() {
 }
 
 function convertTime (t){
-  return parseInt(t/86400)+' days '+(new Date(t%86400*1000)).toUTCString().replace(/.*(\d{2}):(\d{2}):(\d{2}).*/, "$1:$2:$3");
+  return parseInt(t/86400)+' суток '+(new Date(t%86400*1000)).toUTCString().replace(/.*(\d{2}):(\d{2}):(\d{2}).*/, "$1:$2:$3");
 }
 
 function InfoYouTube() {

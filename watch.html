@@ -107,7 +107,8 @@ Double Click — position by default.
   <div class="VideoInfo">
     <div class="title" onclick="window.open('https://i.ytimg.com/vi/' + VIDEO_ID + '/maxresdefault_live.jpg')">
       <p class="mdi mdi-text"></p>
-      <div id="title">Loading...</div>
+      <div id="title">
+        Loading...</div>
     </div>
 
     <div class="baseInfo">
@@ -127,18 +128,18 @@ Double Click — position by default.
         <progress max="100" id="likeProgress" title="Процент лайков"></progress>
         <!--  -->
       </div>
+      <div class="viewsCo">
+        <div class="viewers" title="Сейчас смотрят">
+          <p class="mdi mdi-account" style="font-size: 39px"></p>
+          <div id="viewersCount" class="odometer">Loading...</div>
+        </div>
 
-      <div class="viewers" title="Сейчас смотрят">
-        <p class="mdi mdi-account" style="font-size: 39px"></p>
-        <div id="viewersCount" class="odometer">Loading...</div>
+        <div class="views" title="Просмотров на видео с момента публикации">
+          <p class="mdi mdi-account-multiple"></p>
+          <div id="viewCount" class="odometer">Loading...</div>
+        </div>
       </div>
 
-      <div class="views" title="Просмотров на видео с момента публикации">
-        <p class="mdi mdi-account-multiple"></p>
-        <div id="viewCount" class="odometer">Loading...</div>
-      </div>
-
-      <div title="Длительность трансляции" id="YTinfo"></div>
     </div>
     <!--  -->
     <!--  -->
@@ -182,7 +183,14 @@ Double Click — position by default.
           <p class="mdi mdi-clock"></p>
           <div id="publishedAt">Loading...</div>
         </div>
+        <h4 class="mTB-5">Длительность трансляции</h4>
+        <div class="timeIcon">
+          <p class="mdi mdi-clock"></p>
+          <div style="margin-left: 5px;" title="Синхронизированно с плеером" id="YTinfo">0 days 00:00:00
+          </div>
+        </div>
       </div>
+
 
     </div>
     <!--  -->

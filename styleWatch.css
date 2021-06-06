@@ -11,6 +11,25 @@
   }
 }
 
+
+@media only screen and (max-width: 1200px){
+  .baseInfo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-content: flex-end !important;
+    align-items: flex-start !important;
+  }
+  .flx {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .StartTime{
+    margin-left: 0 !important;
+    margin-top: 10px !important;
+  }
+}
+
 /* 
 
 
@@ -18,8 +37,6 @@ Start
 
 
 */
-
-
 #loading{
   display: flex;
   justify-content: center;
@@ -43,6 +60,8 @@ Start
   top: 100%;
   margin-left: 20px;
   width: 70%;
+  height: max-content;
+  padding-right: 100%;
 }
 
 /* 
@@ -80,6 +99,7 @@ Base info
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  transition: ease all .5s;
 }
 
 /* 
@@ -146,6 +166,7 @@ div#dislikeCount {
   border-radius: 10px;
   width: fit-content;
   display: flex;
+  align-items: center;
 }
 
 div#viewersCount{
@@ -164,27 +185,19 @@ div#viewersCount{
   align-items: baseline;
   margin-left: 15px;
   margin-right: 15px;
+  align-items: center;
+}
+
+.viewsCo {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
 }
 
 div#viewCount {
   margin-left: 7px;
 }
 
-div#YTinfo {
-  font-size: 40px;
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
-  width: fit-content;
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.55, 0.09, 0.68, 0.53);
-}
-
-div#YTinfo:hover{
-  opacity: 1;
-}
 
 /* 
 
@@ -195,13 +208,13 @@ Channel Info
 .flx {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .CHinfo {
   background: black;
   box-shadow: rgb(0 0 0) 0px 0px 4rem;
-  padding: 10px;
+  padding: 22px;
   margin-top: 10px;
   border-radius: 10px;
   width: fit-content;
@@ -222,6 +235,14 @@ div#CHchannelName {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
+  max-width: 520px;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -ms-line-clamp: 2;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
 .CHicon {
@@ -251,7 +272,7 @@ Start time
 
 
 .StartTime {
-  font-size: 18px;
+  font-size: 16px;
   background: black;
   box-shadow: rgb(0 0 0) 0px 0px 4rem;
   padding: 10px;
@@ -259,7 +280,8 @@ Start time
   width: fit-content;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 
 .timeIcon {
@@ -271,6 +293,8 @@ Start time
 div#scheduledStartTime, div#actualStartTime, div#publishedAt {
   margin-left: 5px;
 }
+
+
 
 /* 
 
@@ -285,7 +309,7 @@ div#description {
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
-  width: fit-content;
+  width: inherit;
   display: flex;
   align-items: baseline;
   white-space: break-spaces;

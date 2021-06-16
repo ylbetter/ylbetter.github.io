@@ -12,6 +12,20 @@
 }
 
 
+:root {
+  --bg-color-infopanels: rgb(0 0 0 / 100%);
+  --colorbox-shadow: rgb(0 0 0 / 100%) 0px 0px 1rem;
+  --bg-color-body: #0d1117;
+}
+
+
+/* Default colors
+ :root {
+  --bg-color-infopanels: rgb(0, 0, 0);
+  --colorbox-shadow: rgb(0 0 0) 0px 0px 4rem;
+  --bg-color-body: #0d1117;
+} */
+
 @media only screen and (max-width: 1200px){
   .baseInfo {
     display: flex !important;
@@ -37,6 +51,28 @@ Start
 
 
 */
+
+iframe#ytvideoIframe {
+  width: 100%;
+  height: 100vh;
+}
+
+.loadingAnimation {
+  width: 60px;
+  height: 50px;
+  color: white;
+  --c: radial-gradient(farthest-side,currentColor 90%,#fff0);
+  background: var(--c) 50% 0, var(--c) 0 100%, var(--c) 100% 100%;
+  background-size: 22px 22px;
+  background-repeat: no-repeat;
+  position: relative;
+  animation: d6 700ms infinite;
+}
+
+@keyframes d6{
+  50%,100% {background-position: 100% 100%,50% 0,0 100%}
+}
+
 #loading{
   display: flex;
   justify-content: center;
@@ -72,8 +108,8 @@ Title
 
 .title {
   font-size: 40px;
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
@@ -100,6 +136,7 @@ Base info
   align-items: center;
   justify-content: flex-start;
   transition: ease all .5s;
+  column-gap: 10px;
 }
 
 /* 
@@ -109,8 +146,8 @@ Percent Likes and DisLikes
 */
 .percent {
   font-size: 40px;
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
@@ -119,7 +156,6 @@ Percent Likes and DisLikes
   align-items: center;
   flex-direction: column;
   align-content: center;
-  margin-right: 10px;
 }
 
 progress#likeProgress {
@@ -159,8 +195,8 @@ div#dislikeCount {
 
 .viewers {
   font-size: 40px;
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
@@ -175,16 +211,14 @@ div#viewersCount{
 
 .views {
   font-size: 40px;
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
   width: fit-content;
   display: flex;
   align-items: baseline;
-  margin-left: 15px;
-  margin-right: 15px;
   align-items: center;
 }
 
@@ -192,6 +226,7 @@ div#viewersCount{
   display: flex;
   flex-direction: row;
   align-items: stretch;
+  column-gap: 10px;
 }
 
 div#viewCount {
@@ -208,12 +243,13 @@ Channel Info
 .flx {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
+  column-gap: 10px;
 }
 
 .CHinfo {
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
   padding: 22px;
   margin-top: 10px;
   border-radius: 10px;
@@ -226,6 +262,7 @@ Channel Info
 
 img#CHavatar {
   width: 157px;
+  height: 157px;
   border-radius: 100px;
   margin-right: 15px;
   cursor: pointer;
@@ -273,14 +310,13 @@ Start time
 
 .StartTime {
   font-size: 16px;
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
   padding: 10px;
   border-radius: 10px;
   width: fit-content;
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
   margin-top: 10px;
 }
 
@@ -298,22 +334,51 @@ div#scheduledStartTime, div#actualStartTime, div#publishedAt {
 
 /* 
 
-Description
+Description + Tags
 
 */
-
-div#description {
+.description {
   font-size: 18px;
-  background: black;
-  box-shadow: rgb(0 0 0) 0px 0px 4rem;
-  padding: 10px;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
   margin-top: 10px;
   border-radius: 10px;
   width: inherit;
   display: flex;
-  align-items: baseline;
-  white-space: break-spaces;
+  align-items: stretch;
   line-height: 1.3;
+  flex-direction: column;
+  border-color: #6a5acd;
+}
+
+div#description {
+  white-space: pre-wrap;
+}
+
+.tagsAndDownloadLinks {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  column-gap: 10px;
+}
+
+.tags, .downloadLinks {
+  font-size: 18px;
+  background: var(--bg-color-infopanels);
+  box-shadow: var(--colorbox-shadow);
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  width: fit-content;
+  display: flex;
+  align-items: stretch;
+  line-height: 1.3;
+  flex-direction: column;
+  border-color: #6a5acd;
+}
+
+.mdi-comment-text-outline, .mdi-cloud-download, .mdi-tag {
+  font-size: 35px;
 }
 
 /* 
@@ -381,7 +446,7 @@ button{
 */
 html body{
     margin: 0; height: 100%;
-    background: #0d1117;
+    background: var(--bg-color-body);
     overflow-x: hidden;
 }
 
@@ -403,6 +468,7 @@ a {
     /* width: 83%; */
     right: 100px;
     min-width: 30%;
+    z-index: 1488;
 }
 
 #right_panel {

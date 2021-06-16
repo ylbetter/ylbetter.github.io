@@ -19,7 +19,9 @@
 </head>
 
 <body onload="chat()">
-  <span id="loading">Loading...</span>
+  <span id="loading">
+    <div class="loadingAnimation"></div>
+  </span>
   <div class="top">
     <script>
       var isResizing = false,
@@ -186,7 +188,7 @@ Double Click — position by default.
         <h4 class="mTB-5">Длительность трансляции</h4>
         <div class="timeIcon">
           <p class="mdi mdi-clock"></p>
-          <div style="margin-left: 5px;" title="Синхронизированно с плеером" id="YTinfo">0 days 00:00:00
+          <div style="margin-left: 5px;" title="Синхронизированно с плеером" id="YTinfo">0 суток 00:00:00
           </div>
         </div>
       </div>
@@ -194,7 +196,29 @@ Double Click — position by default.
 
     </div>
     <!--  -->
-    <div id="description">Loading...</div>
+    <fieldset class="description" title="Теги видео">
+      <legend>
+        <p class="mdi mdi-comment-text-outline"></p>
+      </legend>
+      <div id="description"></div>
+    </fieldset>
+    <div class="tagsAndDownloadLinks">
+      <fieldset class="tags" title="Теги видео">
+        <legend>
+          <p class="mdi mdi-tag"></p>
+        </legend>
+        <div id="tags"></div>
+      </fieldset>
+
+      <fieldset class="downloadLinks" title="Ссылки для загрузки видео">
+        <legend>
+          <p class="mdi mdi-cloud-download"></p>
+        </legend>
+        <div id="downloadLinks"></div>
+        <div id="formatStreams"></div>
+      </fieldset>
+    </div>
+
     <div class="footer">
       &copy; 8 Feb 2021 — <span id="copyright">
         <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script>

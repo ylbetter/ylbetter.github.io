@@ -120,6 +120,8 @@ function getViews() {
       //document.getElementById("YTthnail").src = data.items[0].snippet.thumbnails.maxres.url;
       // Название трансляции
       document.getElementById("title").innerHTML = data.items[0].snippet.title;
+      // Описание
+      document.getElementById("description").innerHTML = urlify(data.items[0].snippet.description);
       // Публикация
       document.getElementById("publishedAt").innerHTML = new Date(
         data.items[0].snippet.publishedAt
@@ -159,6 +161,15 @@ function getViews() {
 
 */
 
+function urlify(text) {
+  var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+  //var urlRegex = /(https?:\/\/[^\s]+)/g;
+  return text.replace(urlRegex, function (url, b, c) {
+    var url2 = c == "www." ? "http://" + url : url;
+    return '<a href="' + url2 + '" target="_blank">' + url + "</a>";
+  });
+}
+
 function CHredirect() {
   window.open('https://www.youtube.com/channel/' + channel_ID);
 }
@@ -193,8 +204,6 @@ function downLinks() {
       console.log(tags);
       // Теги
       var arr = tags.keywords;
-      // Описание
-      document.getElementById("description").innerHTML = tags.description;
 
       if (arr.length === 0)
         document.getElementById("tags").innerHTML = "Теги не установлены";

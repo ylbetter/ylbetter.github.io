@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css" />
+
+    <link rel="stylesheet" href="style/odometer-theme-default.css" />
+    <script src="scripts/odometer.js"></script>
+
+    <title>Counter</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+
+        html,
+        body {
+            background: transparent;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+        }
+
+        * {
+            font-family: "Ubuntu", sans-serif !important;
+        }
+
+        :root {
+            --bg-color-infopanels: rgb(0 0 0 / 100%);
+            --colorbox-shadow: rgb(0 0 0 / 100%) 0px 0px 1rem;
+            --bg-color-body: #0d1117;
+        }
+
+
+
+        /* 
+
+Channel Info
+
+*/
+
+        .flx {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            column-gap: 10px;
+        }
+
+        .CHinfo {
+            background: var(--bg-color-infopanels);
+            box-shadow: var(--colorbox-shadow);
+            padding: 22px;
+            margin-top: 10px;
+            border-radius: 10px;
+            width: max-content;
+            height: 159px;
+            display: flex;
+            line-height: 1.3;
+            align-items: center;
+        }
+
+        img#CHavatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 100px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        div#CHchannelName {
+            font-size: 38px;
+            font-weight: bold;
+            cursor: pointer;
+            max-width: 520px;
+            -ms-text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            -ms-line-clamp: 2;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+        }
+
+        .CHicon {
+            display: flex;
+            flex-direction: row;
+            font-size: 32px;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .flxText {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        div#CHsubscribersCountAPI,
+        div#CHvideoCount,
+        div#CHviewCount {
+            margin-left: 10px;
+            font-size: 25px;
+        }
+
+        .mdi {
+            /* font-size:50px; */
+            color: gray;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        .odometer-inside {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        function updatePage() {
+            fetch(
+                `https://beta.mixerno.space/api/youtube-subscriber-counter/channel/` +
+                window.location.search.split("?")[1]
+            )
+                .then((res) => res.json())
+                .then((out) => {
+                    console.log(out);
+                    // Имя канала
+                    document.getElementById("CHchannelName").innerHTML = out.userList[0].user.name;
+                    // Кол-во подписчиков на канале
+                    document.getElementById("CHsubscribersCountAPI").innerHTML = out.userList[0].stats.subscriberCountAPI;
+                    // Кол-во видео на канале
+                    document.getElementById("CHvideoCount").innerHTML = out.userList[0].stats.videoCount;
+                    // Просмотров на канале
+                    document.getElementById("CHviewCount").innerHTML = out.userList[0].stats.viewCount;
+                    // Аватар канала
+                    document.getElementById("CHavatar").src =
+                        out.userList[0].user.avatar.high.url;
+                })
+                .catch((err) => {
+                    throw err;
+                });
+        }
+
+        // function updatePage() {
+        //     fetch(
+        //         `https://invidious.silkky.cloud/api/v1/channels/` +
+        //         window.location.search.split("?")[1]
+        //     )
+        //         .then((res) => res.json())
+        //         .then((out) => {
+        //             console.log(out);
+        //             // Имя канала
+        //             document.getElementById("CHchannelName").innerHTML = out.author;
+        //             // Кол-во подписчиков на канале
+        //         })
+        //         .catch((err) => {
+        //             throw err;
+        //         });
+        // }
+
+        setInterval(() => {
+            updatePage();
+        }, 10000);
+        updatePage();
+    </script>
+
+    <div class="info">
+        <!--  -->
+        <div class="flx">
+            <div class="CHinfo">
+                <img id="CHavatar" onclick="CHredirect()"></img>
+                <!-- IconFlx -->
+                <div class="iconFLX">
+                    <div id="CHchannelName" onclick="CHredirect()">Loading...</div>
+
+                    <div class="flxText">
+                        <div class="CHicon" title="Количество подписчиков">
+                            <p class="mdi mdi-youtube-subscription"></p>
+                            <div id="CHsubscribersCountAPI" class="odometer">Loading...</div>
+                        </div>
+                        <div class="CHicon" title="Количество загруженных видео">
+                            <p class="mdi mdi-upload"></p>
+                            <div id="CHvideoCount" class="odometer">Loading...</div>
+                        </div>
+                        <div class="CHicon" title="Количество просмотров на всех видео">
+                            <p class="mdi mdi-eye"></p>
+                            <div id="CHviewCount" class="odometer">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+            </div>
+            <!--  -->
+        </div>
+</body>
+
+</html>

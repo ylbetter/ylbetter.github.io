@@ -107,7 +107,7 @@ Double Click — position by default.
   <!--  -->
 
   <div class="VideoInfo">
-    <div class="title" onclick="window.open('https://i.ytimg.com/vi/' + video_id + '/sddefault_live.jpg')">
+    <div class="title" onclick="window.open('https://y.com.cm/vi/' + video_id + '/maxres.jpg')">
       <p class="mdi mdi-text"></p>
       <div id="title">
         Loading...</div>
@@ -170,20 +170,34 @@ Double Click — position by default.
         <!--  -->
       </div>
       <div class="StartTime">
-        <h4 class="mTB-5">Трансляция запланирована</h4>
-        <div class="timeIcon">
-          <p class="mdi mdi-clock"></p>
-          <div id="scheduledStartTime">Loading...</div>
+        <div id="planned">
+          <h4 class="mTB-5">Трансляция запланирована</h4>
+          <div class="timeIcon">
+            <p class="mdi mdi-clock"></p>
+            <div id="scheduledStartTime"></div>
+          </div>
         </div>
-        <h4 class="mTB-5">Трансляция началась</h4>
-        <div class="timeIcon">
-          <p class="mdi mdi-clock"></p>
-          <div id="actualStartTime">Loading...</div>
+
+        <div id="started">
+          <h4 class="mTB-5">Трансляция началась</h4>
+          <div class="timeIcon">
+            <p class="mdi mdi-clock"></p>
+            <div id="actualStartTime"></div>
+          </div>
         </div>
+
+        <div id="ended">
+          <h4 class="mTB-5">Трансляция завершилась</h4>
+          <div class="timeIcon">
+            <p class="mdi mdi-clock"></p>
+            <div id="actualEndTime"></div>
+          </div>
+        </div>
+
         <h4 class="mTB-5">Видео опубликовано</h4>
         <div class="timeIcon">
           <p class="mdi mdi-clock"></p>
-          <div id="publishedAt">Loading...</div>
+          <div id="publishedAt"></div>
         </div>
         <h4 class="mTB-5">Длительность трансляции</h4>
         <div class="timeIcon">
@@ -196,21 +210,21 @@ Double Click — position by default.
 
     </div>
     <!--  -->
-    <fieldset class="description" title="Теги видео">
+    <fieldset id="ds" class="description" title="Описание">
       <legend>
         <p class="mdi mdi-comment-text-outline"></p>
       </legend>
       <div id="description"></div>
     </fieldset>
     <div class="tagsAndDownloadLinks">
-      <fieldset class="tags" title="Теги видео">
+      <fieldset id="tg" class="tags" title="Теги видео">
         <legend>
           <p class="mdi mdi-tag"></p>
         </legend>
         <div id="tags"></div>
       </fieldset>
 
-      <fieldset class="downloadLinks" title="Ссылки для загрузки видео">
+      <fieldset id="dl" class="downloadLinks" title="Ссылки для загрузки видео">
         <legend>
           <p class="mdi mdi-cloud-download"></p>
         </legend>

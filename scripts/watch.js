@@ -70,7 +70,6 @@ function hideChatBtn() {
 setTimeout(() => {
   hideChatBtn();
   hideChatBtn();
-  console.log("[console > watch.js] Page load");
 }, 1000);
 
 // 
@@ -86,25 +85,10 @@ function popupChat() {
 YouTube Counter
 
 */
-var countlength, likes, views, viewsA;
-      var param = window.location.search.split("?v=");
-      video_id = param[1].replace(/\?.*/, '');
-      getViews();
-      function updatePage() {
-        location.href = `?id=${video_id}`;
-}
+var param = window.location.search.split("?v=");
+video_id = param[1].replace(/\?.*/, '');
+getViews();
 
-
-const isEmpty = (obj) => {
-  if (obj === null ||
-      obj === undefined ||
-      Array.isArray(obj) ||
-      typeof obj !== 'object'
-  ) {
-      return true;
-  }
-  return Object.getOwnPropertyNames(obj).length === 0;
-};
       
 function getViews() {
   fetch(
@@ -112,6 +96,7 @@ function getViews() {
   )
     .then((res) => res.json())
     .then((data) => {
+      mixerno = data;
       console.log(data);
       channel_ID = data.items[0].snippet.channelId;
       // Имя канала
@@ -121,35 +106,61 @@ function getViews() {
       // Название трансляции
       document.getElementById("title").innerHTML = data.items[0].snippet.title;
       // Описание
-      document.getElementById("description").innerHTML = urlify(data.items[0].snippet.description);
+      data.items[0].snippet.description.length === 0 ?
+        document.getElementById("ds").style.display = "none" :
+        document.getElementById("description").innerHTML = urlify(data.items[0].snippet.description);
+      
       // Публикация
       document.getElementById("publishedAt").innerHTML = new Date(
         data.items[0].snippet.publishedAt
       ).toLocaleString();
       // Просмотров всего
       document.getElementById("viewCount").innerHTML = data.items[0].statistics.viewCount;
-      // Лайков
-      document.getElementById("likesCount").innerHTML = data.items[0].statistics.likeCount;
-      // Дизлайков
-      document.getElementById("dislikeCount").innerHTML =
-        data.items[0].statistics.dislikeCount;
+    
+      // Трансляция запланирована
+    ((data.items[0].liveStreamingDetails === undefined) || (data.items[0].liveStreamingDetails.scheduledStartTime === undefined)) ?
+      document.getElementById("planned").style.display = "none" :
+        document.getElementById("scheduledStartTime").innerHTML = new Date(data.items[0].liveStreamingDetails.scheduledStartTime).toLocaleString();
+      
+            
+      // Время начала трансляции
+      ((data.items[0].liveStreamingDetails === undefined) || (data.items[0].liveStreamingDetails.actualStartTime === undefined)) ?
+        document.getElementById("started").style.display = "none" :
+        document.getElementById("actualStartTime").innerHTML = new Date(
+          data.items[0].liveStreamingDetails.actualStartTime
+        ).toLocaleString();
+      
+      // Трансляция завершена
+      ((data.items[0].liveStreamingDetails === undefined) || (data.items[0].liveStreamingDetails.actualEndTime === undefined)) ?
+        document.getElementById("ended").style.display = "none" :
+        document.getElementById("actualEndTime").innerHTML = new Date(
+          data.items[0].liveStreamingDetails.actualEndTime
+        ).toLocaleString();
+      
+      // Зрителей на трансляции
+      data.items[0].snippet.liveBroadcastContent === "none" ?
+        document.getElementById("viewersCount").innerHTML = 0 :
+        document.getElementById("viewersCount").innerHTML = data.items[0].liveStreamingDetails.concurrentViewers;
+      
+      // Теги
+        data.items[0].snippet.tags === undefined ?
+          document.getElementById("tg").style.display = "none":
+        document.getElementById("tags").innerHTML = data.items[0].snippet.tags.join('<br>');
+
+      // Лайки
+      var likes = data.items[0].statistics.likeCount === undefined ? 0 : data.items[0].statistics.likeCount;
+      document.getElementById("likesCount").innerHTML = likes;
+
+      // Дизлайки
+      var dislikes = data.items[0].statistics.dislikeCount === undefined ? 0 : data.items[0].statistics.dislikeCount;
+      document.getElementById("dislikeCount").innerHTML = dislikes;
+
       /*
       Percent Likes
       */
-      var like = data.items[0].statistics.likeCount;
-      var dislike = data.items[0].statistics.dislikeCount;
-      document.getElementById("likeProgress").value = Math.round(100 * like / (+like+ + +dislike));
-      // Время начала трансляции
-      document.getElementById("actualStartTime").innerHTML = new Date(
-        data.items[0].liveStreamingDetails.actualStartTime
-      ).toLocaleString();
-      // Трансляция запланирована
-      document.getElementById("scheduledStartTime").innerHTML = new Date(
-        data.items[0].liveStreamingDetails.scheduledStartTime
-      ).toLocaleString();
-      // Зрителей на трансляции
-      document.getElementById("viewersCount").innerHTML =
-      data.items[0].liveStreamingDetails.concurrentViewers;
+      data.items[0].statistics.likeCount === undefined ?
+        document.getElementById("likeProgress").value = 0 :
+        document.getElementById("likeProgress").value = Math.round(100 * likes / (+likes + + +dislikes));
     })
     .catch((err) => {
       throw err;
@@ -190,55 +201,6 @@ function chat() {
   }, 2000);
 }
 
-/*
-
-Tags
-
-*/
-function downLinks() {
-  fetch(
-    `https://ytprivate.com/api/v1/videos/`+ video_id +`?&pretty=1`
-  )
-    .then((res) => res.json())
-    .then((tags) => {
-      console.log(tags);
-      // Теги
-      var arr = tags.keywords;
-
-      if (arr.length === 0)
-        document.getElementById("tags").innerHTML = "Теги не установлены";
-      else
-        document.getElementById("tags").innerHTML = arr.join('<br>');
-      
-      // 
-      let links = tags.adaptiveFormats;
-      let out_arr = document.getElementById('downloadLinks');
-      let str = '';
-      for (let i = 0; i < links.length; i++) {
-          
-        if (links[i].url !== undefined, links[i].resolution == undefined) str += '<span>' + links[i].container + " " + links[i].encoding +
-          "</span>" + " <span>" + links[i].type.replace(/\;.*/, '') +
-          '</span> ' + ' <a class="mdi mdi-download" href="' + links[i].url + '">Download</a> <br>';
-        else
-          str += '<span>' + links[i].resolution +
-            " </span>" + " <span>" + links[i].type.replace(/\;.*/, '') +
-            '</span> ' + ' <a class="mdi mdi-download" href="' + links[i].url + '">Download</a> <br>';
-      }
-      out_arr.innerHTML = str;
-
-      let form = ' ';      
-      for (let i = 0; i < tags.formatStreams.length;i++){
-        form += '<span>' + tags.formatStreams[i].container + " " + "</span>" +
-          "<span>" + tags.formatStreams[i].quality + '</span> ' + tags.formatStreams[i].size +
-          ' <a class="mdi mdi-download" href="' + tags.formatStreams[i].url + '">Download</a> <br>';
-      }
-      document.getElementById("formatStreams").innerHTML = form;
-    })
-    .catch((err) => {
-      throw err;
-    });
-}
-
 function chInfo() {
   fetch(
     `https://beta.mixerno.space/api/youtube-subscriber-counter/channel/` +
@@ -264,8 +226,49 @@ function chInfo() {
     });
 }
 
+/*
+
+Download Links
+
+*/
+function downLinks() {
+  fetch(
+    `https://ytprivate.com/api/v1/videos/`+ video_id +`?&pretty=1`
+  )
+    .then((res) => res.json())
+    .then((tags) => {
+      console.log(tags);
+      let links = tags.adaptiveFormats;
+      let str = '';
+      for (let i = 0; i < links.length; i++) {
+          
+        if (links[i].url !== undefined, links[i].resolution == undefined) str += '<span>' + links[i].container + " " + links[i].encoding +
+          "</span>" + " <span>" + links[i].type.replace(/\;.*/, '') +
+          '</span> ' + ' <a class="mdi mdi-download" href="' + links[i].url + '">Download</a> <br>';
+        else
+          str += '<span>' + links[i].resolution +
+            " </span>" + " <span>" + links[i].type.replace(/\;.*/, '') +
+            '</span> ' + ' <a class="mdi mdi-download" href="' + links[i].url + '">Download</a> <br>',
+            document.getElementById("dl").style.display = "flex";
+      }
+      document.getElementById('downloadLinks').innerHTML = str;
+
+      let form = ' ';      
+      for (let i = 0; i < tags.formatStreams.length;i++){
+        form += '<span>' + tags.formatStreams[i].container + " " + "</span>" +
+          "<span>" + tags.formatStreams[i].quality + '</span> ' + tags.formatStreams[i].size +
+          ' <a class="mdi mdi-download" href="' + tags.formatStreams[i].url + '">Download</a> <br>';
+      }
+      document.getElementById("formatStreams").innerHTML = form;
+    })
+    .catch((err) => {
+      throw err;
+    });
+}
+
 downLinks()
 
 setTimeout(() => {chInfo()}, 1000);
 setInterval(getViews, 10000); // 10 second
 setInterval(InfoYouTube, 1000); // 1 second
+

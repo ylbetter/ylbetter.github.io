@@ -24,6 +24,8 @@ const urls =
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCMG0wa7TcGGzfVJu2CmVxhQ`, // OZON671GAMES3
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UClzAjKnWSVEXwImRiIEVQ0w`, // Matilda Lando
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCXdyP8qQf26lsADsGp-itjw`, // АндрюхаиКомпания
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCf7GcWt0V6_f8A5UzO48iLw`, // Olisya TS
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCgGWdn-B7XA2ahisWUyCYHg`, // Палата 23    
 ];
 
 function LiveChecker() {

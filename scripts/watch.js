@@ -240,7 +240,7 @@ function downLinks() {
       console.log(tags);
       let links = tags.adaptiveFormats;
       let str = '';
-      for (let i = 0; i < links.length; i++) {
+        for (let i = 0; i < links.length; i++) {
           
         if (links[i].url !== undefined, links[i].resolution == undefined) str += '<span>' + links[i].container + " " + links[i].encoding +
           "</span>" + " <span>" + links[i].type.replace(/\;.*/, '') +

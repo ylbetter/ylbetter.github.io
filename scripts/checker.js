@@ -28,7 +28,8 @@ const urls =
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCgGWdn-B7XA2ahisWUyCYHg`, // Палата 23    
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCSlgBdZxScyvtEzuZ-x0ekg`, // Из Москвы в Европу. Жизнь с нуля    
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCcRoDJkE4FDDZUTzcBnsnPA`, // никит очка    
-    
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCbTLDSLh1_PNgmFMJ4v-xHg`, // Арчи Чиллов    
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCYYvf2FsWtLgF2Py42NAqNQ`, // НОРСКИЕ ДВИЖЕНИЯ
 ];
 
 function LiveChecker() {

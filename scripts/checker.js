@@ -27,6 +27,8 @@ const urls =
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCf7GcWt0V6_f8A5UzO48iLw`, // Olisya TS
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCgGWdn-B7XA2ahisWUyCYHg`, // Палата 23    
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCSlgBdZxScyvtEzuZ-x0ekg`, // Из Москвы в Европу. Жизнь с нуля    
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCcRoDJkE4FDDZUTzcBnsnPA`, // никит очка    
+    
 ];
 
 function LiveChecker() {

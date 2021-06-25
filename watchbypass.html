@@ -6,14 +6,14 @@
   <meta name="Keywords" content="YouTube, YouTube Looks Better, Live stream, streaming, livestream" />
   <meta name="description" content="Convenient viewing of live broadcasts on YouTube." />
   <title>YouTube Looks Better</title>
-  <link rel="stylesheet" href="style/styleWatch.css" />
+  <link rel="stylesheet" href="style/styleWatchBypass.css" />
   <!--      -->
   <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="style/odometer-theme-default.css" />
   <!--  -->
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <!--  -->
-  <script src="scripts/watch.js"></script>
+  <script src="scripts/watchbypass.js"></script>
   <script src="scripts/odometer.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
@@ -66,8 +66,8 @@
     </script>
     <div id="container">
       <!-- Back -->
-      <input class="homepage" title="YouTube Age Bypass" type="button"
-        onclick="location.href='/watchbypass'+ location.search;" />
+      <input class="homepage" title="Return to iframe" type="button"
+        onclick="location.href='/watch' + location.search;" />
       <!-- Back to YouTube -->
       <input class="back2youtube" title="Back to YouTube" type="button"
         onclick="location.href='https://youtube.com';" />
@@ -82,7 +82,9 @@
             <span type="text" id="textInput">Vol</span>
           </div>
           <!--  -->
-          <div id="ytplayer"></div>
+          <div>
+            <iframe id="ytplayer"></iframe>
+          </div>
           <!--  -->
         </div>
       </div>
@@ -200,12 +202,12 @@ Double Click — position by default.
           <p class="mdi mdi-clock"></p>
           <div id="publishedAt"></div>
         </div>
-        <h4 class="mTB-5">Длительность трансляции</h4>
+        <!-- <h4 class="mTB-5">Длительность трансляции</h4>
         <div class="timeIcon">
           <p class="mdi mdi-clock"></p>
           <div style="margin-left: 5px;" title="Синхронизированно с плеером" id="YTinfo">0 суток 00:00:00
           </div>
-        </div>
+        </div> -->
       </div>
 
 

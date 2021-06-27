@@ -139,8 +139,11 @@ function getViews() {
       
       // Зрителей на трансляции
       data.items[0].snippet.liveBroadcastContent === "none" ?
-        document.getElementById("viewersCount").innerHTML = 0 :
+        document.getElementById("viewersCount").style.display = "none" :
         document.getElementById("viewersCount").innerHTML = data.items[0].liveStreamingDetails.concurrentViewers;
+      
+      if (data.items[0].snippet.liveBroadcastContent === "none")
+      document.getElementById("vi").style.display = "none";
       
       // Теги
         data.items[0].snippet.tags === undefined ?
@@ -233,7 +236,7 @@ Download Links
 */
 
 function formatBytes(bytes, decimals = 2) {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0 || bytes === null) return '';
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
@@ -242,6 +245,21 @@ function formatBytes(bytes, decimals = 2) {
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+function WidthHeight(width, height) {
+  if (width === null) return 'audio only';
+  return width + 'x' + height + 'p';
+}
+
+function fpsReplace(fps) {
+  if (fps === null) return '';
+  return ' @ ' + fps + 'fps ';
+}
+
+function AudioOrVideo(asr) {
+  if (asr === null) return ' video only';
+  return '';
 }
 
 
@@ -255,13 +273,14 @@ function downLinks() {
       let str = '';
       for (let i = 0; i < tags.formats.length; i++) {
         if (tags.manifest_url == undefined)
-        str += '<span class="formattext">' + (i+ +1) + ' - '  + tags.formats[i].format.split('- ')[1] + ' ' + formatBytes(tags.formats[i].filesize) + '<a class="mdi mdi-download" href="' + tags.formats[i].url + '">Download</a></span>';
+        str += '<span class="formattext">' + WidthHeight(tags.formats[i].width, tags.formats[i].height) + fpsReplace(tags.formats[i].fps) + AudioOrVideo(tags.formats[i].asr) + '<span class="bytesibtn">' + formatBytes(tags.formats[i].filesize) + '<a class="mdi mdi-download" href="' + tags.formats[i].url + '">Download</a></span></span>';
         else
-        str = '<span class="formattext">Manifest url (' + tags.width + 'x' + tags.height + 'p' + tags.fps + 'fps)  ' + ' <a class="mdi mdi-download" href="' + tags.manifest_url + '"> Download</a></span>';
+        str += '<span class="formattext">'+ WidthHeight(tags.formats[i].width, tags.formats[i].height) + fpsReplace(tags.formats[i].fps) + ' ' + tags.formats[i].tbr + 'Kbps/s' + '<a class="mdi mdi-download" style="padding-left: 10px;" href="' + tags.formats[i].url + '"> Download</a></span>';
       }
-        document.getElementById("dl").style.display = 'flex';
-        document.getElementById('downloadLinks').innerHTML = str;
 
+      document.getElementById("dl").style.display = 'flex';
+      document.getElementById('downloadLinks').innerHTML = str;
+      document.getElementById('downloadLinks').innerHTML += '<span class="formattext">Manifest hls_playlist <a class="mdi mdi-download" href="' + tags.url + '"> Download</a></span>';
     })
     .catch((err) => {
       throw err;
@@ -273,4 +292,3 @@ downLinks()
 setTimeout(() => {chInfo()}, 1000);
 setInterval(getViews, 10000); // 10 second
 setInterval(InfoYouTube, 1000); // 1 second
-

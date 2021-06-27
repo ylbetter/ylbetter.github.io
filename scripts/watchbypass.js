@@ -1,3 +1,57 @@
+var tag = document.createElement("script");
+tag.src = "https://www.youtube.com/player_api";
+var firstScriptTag = document.getElementsByTagName("script")[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+// 
+// 
+var youTubePlayer;
+function onYouTubeIframeAPIReady() {
+  "use strict";
+
+  var youTubePlayerVolumeItemId = "YouTube-player-volume";
+
+  function onStateChange(event) {
+    var volume = Math.round(event.target.getVolume());
+    var volumeItem = document.getElementById(youTubePlayerVolumeItemId);
+
+    if (volumeItem && Math.round(volumeItem.value) != volume) {
+      volumeItem.value = volume;
+    }
+  }
+
+  youTubePlayer = new YT.Player("ytplayer", {
+    videoId: video_id,
+    playerVars: {
+      autoplay: 1,
+      showinfo: 0,
+      rel: 0,
+      modestbranding: 1,
+      ecver: 2
+    },
+    events: {
+      onStateChange: onStateChange,
+    },
+  });
+  youTubePlayer.personalPlayer = {
+    currentTimeSliding: false,
+    errors: [],
+  };
+}
+
+
+function youTubePlayerActive() {
+  "use strict";
+  return youTubePlayer && youTubePlayer.hasOwnProperty("getPlayerState");
+}
+
+function youTubePlayerVolumeChange(volume) {
+  "use strict";
+
+  if (youTubePlayerActive()) {
+    youTubePlayer.setVolume(volume);
+  }
+}
+
 function hideChatBtn() {
   var ytchat = document.getElementById("right_panel"),
     leftpanel = document.getElementById("left_panel"),
@@ -85,8 +139,11 @@ function getViews() {
       
       // Зрителей на трансляции
       data.items[0].snippet.liveBroadcastContent === "none" ?
-        document.getElementById("viewersCount").innerHTML = 0 :
+        document.getElementById("viewersCount").style.display = "none" :
         document.getElementById("viewersCount").innerHTML = data.items[0].liveStreamingDetails.concurrentViewers;
+      
+      if (data.items[0].snippet.liveBroadcastContent === "none")
+      document.getElementById("vi").style.display = "none";
       
       // Теги
         data.items[0].snippet.tags === undefined ?
@@ -135,16 +192,15 @@ function convertTime (t){
   return parseInt(t/86400)+' суток '+(new Date(t%86400*1000)).toUTCString().replace(/.*(\d{2}):(\d{2}):(\d{2}).*/, "$1:$2:$3");
 }
 
-// function InfoYouTube() {
-//   YTinfo.innerHTML = convertTime(youTubePlayer.getCurrentTime());
-// }
+function InfoYouTube() {
+  YTinfo.innerHTML = convertTime(youTubePlayer.getCurrentTime());
+}
 
 function chat() { 
   document.getElementById("ytchat").src = "https://www.youtube.com/live_chat?v=" + video_id + "&embed_domain=" + window.location.hostname;
   
   document.getElementById("ytplayer").src = "https://invidious.silkky.cloud/embed/" + video_id;
   
-
   setTimeout(() => {
     document.getElementById("loading").remove()
   }, 2000);
@@ -180,35 +236,53 @@ function chInfo() {
 Download Links
 
 */
+
+function formatBytes(bytes, decimals = 2) {
+  if (bytes === 0 || bytes === null) return '';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+function WidthHeight(width, height) {
+  if (width === null) return 'audio only';
+  return width + 'x' + height + 'p';
+}
+
+function fpsReplace(fps) {
+  if (fps === null) return '';
+  return ' @ ' + fps + 'fps ';
+}
+
+function AudioOrVideo(asr) {
+  if (asr === null) return ' video only';
+  return '';
+}
+
+
 function downLinks() {
   fetch(
-    `https://ytprivate.com/api/v1/videos/`+ video_id +`?&pretty=1`
+    `https://youtube-api.browjob.repl.co/youtube/v3/yt-dl/`+ video_id +`?pretty`
   )
     .then((res) => res.json())
     .then((tags) => {
       console.log(tags);
-      let links = tags.adaptiveFormats;
       let str = '';
-        for (let i = 0; i < links.length; i++) {
-          
-        if (links[i].url !== undefined, links[i].resolution == undefined) str += '<span>' + links[i].container + " " + links[i].encoding +
-          "</span>" + " <span>" + links[i].type.replace(/\;.*/, '') +
-          '</span> ' + ' <a class="mdi mdi-download" href="' + links[i].url + '">Download</a> <br>';
+      for (let i = 0; i < tags.formats.length; i++) {
+        if (tags.manifest_url == undefined)
+        str += '<span class="formattext">' + WidthHeight(tags.formats[i].width, tags.formats[i].height) + fpsReplace(tags.formats[i].fps) + AudioOrVideo(tags.formats[i].asr) + '<span class="bytesibtn">' + formatBytes(tags.formats[i].filesize) + '<a class="mdi mdi-download" href="' + tags.formats[i].url + '">Download</a></span></span>';
         else
-          str += '<span>' + links[i].resolution +
-            " </span>" + " <span>" + links[i].type.replace(/\;.*/, '') +
-            '</span> ' + ' <a class="mdi mdi-download" href="' + links[i].url + '">Download</a> <br>',
-            document.getElementById("dl").style.display = "flex";
+        str += '<span class="formattext">'+ WidthHeight(tags.formats[i].width, tags.formats[i].height) + fpsReplace(tags.formats[i].fps) + ' ' + tags.formats[i].tbr + 'Kbps/s' + '<a class="mdi mdi-download" style="padding-left: 10px;" href="' + tags.formats[i].url + '"> Download</a></span>';
       }
-      document.getElementById('downloadLinks').innerHTML = str;
 
-      let form = ' ';      
-      for (let i = 0; i < tags.formatStreams.length;i++){
-        form += '<span>' + tags.formatStreams[i].container + " " + "</span>" +
-          "<span>" + tags.formatStreams[i].quality + '</span> ' + tags.formatStreams[i].size +
-          ' <a class="mdi mdi-download" href="' + tags.formatStreams[i].url + '">Download</a> <br>';
-      }
-      document.getElementById("formatStreams").innerHTML = form;
+      document.getElementById("dl").style.display = 'flex';
+      document.getElementById('downloadLinks').innerHTML = str;
+      document.getElementById('downloadLinks').innerHTML += '<span class="formattext">Manifest hls_playlist <a class="mdi mdi-download" href="' + tags.url + '"> Download</a></span>';
     })
     .catch((err) => {
       throw err;
@@ -219,5 +293,4 @@ downLinks()
 
 setTimeout(() => {chInfo()}, 1000);
 setInterval(getViews, 10000); // 10 second
-// setInterval(InfoYouTube, 1000); // 1 second
-
+setInterval(InfoYouTube, 1000); // 1 second

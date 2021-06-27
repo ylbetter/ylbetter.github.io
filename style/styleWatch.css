@@ -118,6 +118,11 @@ a.mdi.mdi-download {
   display: block;
 }
 
+.bytesibtn {
+  display: flex;
+  padding-left: 10px;
+}
+
 /* 
 
 Title
@@ -204,6 +209,22 @@ div#likesCount {
 div#dislikeCount {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.mdi-eye, .mdi-account-multiple{
+  transition: 200ms all ease-out;
+}
+
+
+.mdi-thumb-up:hover, .mdi-thumb-down:hover, .mdi-eye:hover, .mdi-account-multiple:hover {
+  transform: scale(1.2);
+  cursor:pointer;
+}
+
+.mdi-thumb-down:active, .mdi-thumb-up:active, .mdi-eye:active, .mdi-account-multiple:active {
+  transform: scale(1.1);
+  cursor:pointer;
+  color:#343434;
 }
 /* 
 
@@ -436,7 +457,9 @@ div#downloadLinks, div#tags, div#description {
   color:gray;
   margin-top: 0px;
   margin-bottom: 0px;
+  transition: 200ms all ease-out;
 }
+
 
 svg {
   /* opacity:.5; */

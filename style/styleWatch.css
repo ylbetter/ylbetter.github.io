@@ -108,6 +108,16 @@ iframe#ytvideoIframe {
   display: none;
 }
 
+span.formattext {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+a.mdi.mdi-download {
+  display: block;
+}
+
 /* 
 
 Title

@@ -35,37 +35,37 @@ legend {
     height: 100vh;
 }
 
-.status,
-.channelTitle {
+.status, .channelTitle {
     text-transform: capitalize;
     color: #ffffff;
     background: #3f51b5;
-    border-radius: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
+    border-radius: 100px;
+    padding-right: 9px;
+    padding-left: 9px;
     padding-bottom: 1px;
 }
 
 #d {
     cursor: pointer;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    background: #561b8e2b;
+    border-radius: 10px;
+    border: 1px solid #673ab780;
+    padding-left: 10px;
 }
 
-.status,
-.channelTitle {
-    text-transform: capitalize;
-    color: white;
-}
 
 div#LC_ChannelName {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     align-content: flex-start;
-    max-height: 561px;
-    min-height: 561px;
+    max-height: 574px;
+    min-height: 574px;
     overflow-x: hidden;
-    min-width: 711px;
-    max-width: 711px;
+    min-width: 704px;
+    max-width: 704px;
 }
 
 .info {
@@ -73,7 +73,7 @@ div#LC_ChannelName {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 700px;
+    width: 675px;
 }
 
 img {
@@ -83,6 +83,12 @@ img {
     border: 2px solid #673ab7;
     height: 85px;
     margin-left: 10px;
+    margin-right: 5px;
+}
+
+.text {
+    line-height: 1.5;
+    margin-right: -5px;
 }
 
 
@@ -93,14 +99,13 @@ img {
         /* background: red; */
         font-size: 1.1rem;
     }
-
     fieldset {
         min-width: 515px;
         max-width: 515px;
     }
 
     .info {
-        width: 515px;
+        width: 500px;
     }
 
     img {
@@ -111,8 +116,8 @@ img {
         flex-direction: column;
         align-items: flex-start;
         align-content: flex-start;
-        max-height: 561px;
-        min-height: 561px;
+        max-height: 580px;
+        min-height: 580px;
         overflow-x: hidden;
         min-width: 526px;
         max-width: 526px;
@@ -121,9 +126,15 @@ img {
 }
 
 @media only screen and (max-width: 600px) {
+    .text {
+        line-height: 1.1;
+    }
     fieldset {
         min-width: 325px;
         max-width: 325px;
+    }
+    .con {
+        height: 85vh;
     }
 
     body,
@@ -149,29 +160,32 @@ img {
         flex-direction: row;
         align-items: center;
         justify-content: flex-end;
-        width: 325px;
+        width: 310px;
     }
     div#LC_ChannelName {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         align-content: flex-start;
-        max-height: 561px;
-        min-height: 561px;
+        max-height: 585px;
+        min-height: 585px;
         overflow-x: hidden;
         min-width: 334px;
         max-width: 334px;
+    }
+    #lastupdatetime {
+        margin-top: 13px !important;
     }
 }
 
 #lastupdatetime {
     float: right;
     font-size: 12px;
-    margin-top: 25px;
+    margin-top: 15px;
 }
 
 span.channelTitle {
-    max-width: 140px;
+    max-width: 150px;
     max-height: 20px;
     white-space: nowrap;
     text-overflow: ellipsis;

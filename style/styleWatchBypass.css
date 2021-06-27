@@ -297,6 +297,7 @@ Channel Info
   display: flex;
   line-height: 1.3;
   align-items: center;
+  max-width: 400px;
 }
 
 img#CHavatar {
@@ -311,7 +312,7 @@ div#CHchannelName {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
-  max-width: 520px;
+  max-width: 228px;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;

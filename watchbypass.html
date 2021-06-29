@@ -53,16 +53,12 @@
             // stop resizing
             isResizing = false;
           })
-          .on("dblclick", function (e) {
-            left.css("right", 300);
-            right.css("width", 300);
-            isResizing = false;
-          });
+        $("#drag").on("dblclick", function (e) {
+          left.css("right", 300);
+          right.css("width", 300);
+          isResizing = false;
+        });
       });
-      // Control Volume
-      function updateTextInput(val) {
-        document.getElementById("textInput").textContent = val;
-      }
     </script>
     <div id="container">
       <!-- Back -->
@@ -75,13 +71,6 @@
       <div id="left_panel">
         <!-- Start Video -->
         <div class="video">
-          <!-- Range-Volume 
-          <div class="ControlBtns">
-            <input id="YouTube-player-volume" class="YouTube-volume-input mdl-slider mdl-js-slider" type="range" min="0"
-              max="100" title="Volume" oninput="youTubePlayerVolumeChange(this.value);updateTextInput(this.value);" />
-            <span type="text" id="textInput">Vol</span>
-          </div>
-          -->
           <div>
             <iframe id="ytplayer"></iframe>
           </div>

@@ -86,7 +86,7 @@ YouTube Counter
 
 */
 var param = window.location.search.split("?v=");
-video_id = param[1].replace(/\?.*/, '');
+video_id = param[1].replace(/\?.*/, '').split("&")[0];
 getViews();
 
       
@@ -141,6 +141,7 @@ function getViews() {
       data.items[0].snippet.liveBroadcastContent === "none" ?
         document.getElementById("viewersCount").style.display = "none" :
         document.getElementById("viewersCount").innerHTML = data.items[0].liveStreamingDetails.concurrentViewers;
+            
       
       if (data.items[0].snippet.liveBroadcastContent === "none")
       document.getElementById("vi").style.display = "none";
@@ -214,6 +215,7 @@ function chInfo() {
       console.log(out);
       // Имя канала
       document.getElementById("CHchannelName").innerHTML = out.userList[0].user.name;
+      document.getElementById("CHchannelName").title = out.userList[0].user.name;
       // Кол-во подписчиков на канале
       document.getElementById("CHsubscribersCountAPI").innerHTML = out.userList[0].stats.subscriberCountAPI;
       // Кол-во видео на канале
@@ -222,7 +224,7 @@ function chInfo() {
       document.getElementById("CHviewCount").innerHTML = out.userList[0].stats.viewCount;
       // Аватар канала
       document.getElementById("CHavatar").src =
-        out.userList[0].user.avatar.high.url;
+        out.userList[0].user.avatar.high.url;      
     })
     .catch((err) => {
       throw err;

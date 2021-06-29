@@ -1,57 +1,3 @@
-var tag = document.createElement("script");
-tag.src = "https://www.youtube.com/player_api";
-var firstScriptTag = document.getElementsByTagName("script")[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-// 
-// 
-var youTubePlayer;
-function onYouTubeIframeAPIReady() {
-  "use strict";
-
-  var youTubePlayerVolumeItemId = "YouTube-player-volume";
-
-  function onStateChange(event) {
-    var volume = Math.round(event.target.getVolume());
-    var volumeItem = document.getElementById(youTubePlayerVolumeItemId);
-
-    if (volumeItem && Math.round(volumeItem.value) != volume) {
-      volumeItem.value = volume;
-    }
-  }
-
-  youTubePlayer = new YT.Player("ytplayer", {
-    videoId: video_id,
-    playerVars: {
-      autoplay: 1,
-      showinfo: 0,
-      rel: 0,
-      modestbranding: 1,
-      ecver: 2
-    },
-    events: {
-      onStateChange: onStateChange,
-    },
-  });
-  youTubePlayer.personalPlayer = {
-    currentTimeSliding: false,
-    errors: [],
-  };
-}
-
-
-function youTubePlayerActive() {
-  "use strict";
-  return youTubePlayer && youTubePlayer.hasOwnProperty("getPlayerState");
-}
-
-function youTubePlayerVolumeChange(volume) {
-  "use strict";
-
-  if (youTubePlayerActive()) {
-    youTubePlayer.setVolume(volume);
-  }
-}
-
 function hideChatBtn() {
   var ytchat = document.getElementById("right_panel"),
     leftpanel = document.getElementById("left_panel"),
@@ -86,7 +32,7 @@ YouTube Counter
 
 */
 var param = window.location.search.split("?v=");
-video_id = param[1].replace(/\?.*/, '');
+video_id = param[1].replace(/\?.*/, '').split("&")[0];
 getViews();
 
       
@@ -143,7 +89,7 @@ function getViews() {
         document.getElementById("viewersCount").innerHTML = data.items[0].liveStreamingDetails.concurrentViewers;
       
       if (data.items[0].snippet.liveBroadcastContent === "none")
-      document.getElementById("vi").style.display = "none";
+        document.getElementById("vi").style.display = "none";
       
       // Теги
         data.items[0].snippet.tags === undefined ?
@@ -216,6 +162,7 @@ function chInfo() {
       console.log(out);
       // Имя канала
       document.getElementById("CHchannelName").innerHTML = out.userList[0].user.name;
+      document.getElementById("CHchannelName").title = out.userList[0].user.name;
       // Кол-во подписчиков на канале
       document.getElementById("CHsubscribersCountAPI").innerHTML = out.userList[0].stats.subscriberCountAPI;
       // Кол-во видео на канале

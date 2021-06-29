@@ -53,11 +53,11 @@
             // stop resizing
             isResizing = false;
           })
-          .on("dblclick", function (e) {
-            left.css("right", 300);
-            right.css("width", 300);
-            isResizing = false;
-          });
+        $("#drag").on("dblclick", function (e) {
+          left.css("right", 300);
+          right.css("width", 300);
+          isResizing = false;
+        });
       });
       // Control Volume
       function updateTextInput(val) {

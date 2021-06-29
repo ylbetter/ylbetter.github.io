@@ -313,6 +313,7 @@ div#CHchannelName {
   font-weight: bold;
   cursor: pointer;
   max-width: 228px;
+  white-space: nowrap;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;

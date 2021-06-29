@@ -32,7 +32,8 @@ const urls =
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCYYvf2FsWtLgF2Py42NAqNQ`, // НОРСКИЕ ДВИЖЕНИЯ
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCILhV84IVElDxKa_9mGVpTA`, // ДОРОГОЮ ДОБРА
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCSeTnvtWSsVuBJ1Ghycj4Lg`, // Бандит ТВ
-    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCie_eC-Gk1ap47VUyYdOVYA`, // Коляска    
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCie_eC-Gk1ap47VUyYdOVYA`, // Коляска
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCXugNh7Ec66p_iYBQPfWd9Q`, // Мопсихи NEW
 ];
 
 function LiveChecker() {

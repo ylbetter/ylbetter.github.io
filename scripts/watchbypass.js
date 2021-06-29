@@ -138,9 +138,6 @@ function convertTime (t){
   return parseInt(t/86400)+' суток '+(new Date(t%86400*1000)).toUTCString().replace(/.*(\d{2}):(\d{2}):(\d{2}).*/, "$1:$2:$3");
 }
 
-function InfoYouTube() {
-  YTinfo.innerHTML = convertTime(youTubePlayer.getCurrentTime());
-}
 
 function chat() { 
   document.getElementById("ytchat").src = "https://www.youtube.com/live_chat?v=" + video_id + "&embed_domain=" + window.location.hostname;

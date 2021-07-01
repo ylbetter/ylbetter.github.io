@@ -138,8 +138,7 @@ Title
   border-radius: 10px;
   font-weight: bold;
   display: flex;
-  width: fit-content;
-
+  width: max-content;
   cursor: pointer;
 }
 

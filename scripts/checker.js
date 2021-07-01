@@ -34,6 +34,7 @@ const urls =
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCSeTnvtWSsVuBJ1Ghycj4Lg`, // Бандит ТВ
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCie_eC-Gk1ap47VUyYdOVYA`, // Коляска
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCXugNh7Ec66p_iYBQPfWd9Q`, // Мопсихи NEW
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCVE57NdL52xkeE9j77pnPng`, // БУ Lebed & Shaman
 ];
 
 function LiveChecker() {

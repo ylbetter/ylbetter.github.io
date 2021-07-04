@@ -25,7 +25,7 @@ const urls =
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UClzAjKnWSVEXwImRiIEVQ0w`, // Matilda Lando
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCXdyP8qQf26lsADsGp-itjw`, // АндрюхаиКомпания
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCf7GcWt0V6_f8A5UzO48iLw`, // Olisya TS
-    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCgGWdn-B7XA2ahisWUyCYHg`, // Палата 23    
+    `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCz8LTc-y_GIwKf2r-NuhFjw`, // Сергей ПалычЪ    
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCSlgBdZxScyvtEzuZ-x0ekg`, // Из Москвы в Европу. Жизнь с нуля    
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCcRoDJkE4FDDZUTzcBnsnPA`, // никит очка    
     `https://youtube-api.browjob.repl.co/youtube/v3/getstreams/UCbTLDSLh1_PNgmFMJ4v-xHg`, // Арчи Чиллов    

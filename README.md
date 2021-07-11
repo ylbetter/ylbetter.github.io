@@ -1,11 +1,18 @@
-### Counter 
+# ДЛЯ ОБХОДА CORS (На странице *watchbypass*) НЕОБХОДИМО УСТАНОВИТЬ РАСШИРЕНИЯ: 
+
+[Google Chrome](https://chrome.google.com/webstore/detail/cors-freeiptv/fickmiiogfnojlhegfhkilcpefoophgi)
+
+[Firefox](https://addons.mozilla.org/ru/firefox/addon/cors-everywhere/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
+
+
+# Counters 
 Video Info
 [https://ylbetter.github.io/counter.html](https://ylbetter.github.io/counter.html?)```?VIDEO_ID```
 
 Channel Info
 [https://ylbetter.github.io/channelinfo.html](https://ylbetter.github.io/channelinfo.html?)```?CHANNEL_ID```
 
-Checker online streams
+# Checker online streams
 [https://ylbetter.github.io/checker.html](https://ylbetter.github.io/checker.html)
 
 

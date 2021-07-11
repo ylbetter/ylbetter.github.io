@@ -142,7 +142,7 @@ function convertTime (t){
 function chat() { 
   document.getElementById("ytchat").src = "https://www.youtube.com/live_chat?v=" + video_id + "&embed_domain=" + window.location.hostname;
   
-  document.getElementById("ytplayer").src = "https://invidious.silkky.cloud/embed/" + video_id;
+  // document.getElementById("ytplayer").src = "https://invidious.silkky.cloud/embed/" + video_id;
   
   setTimeout(() => {
     document.getElementById("loading").remove()
@@ -227,6 +227,24 @@ function downLinks() {
       document.getElementById("dl").style.display = 'flex';
       document.getElementById('downloadLinks').innerHTML = str;
       document.getElementById('downloadLinks').innerHTML += '<span class="formattext">Manifest hls_playlist <a class="mdi mdi-download" href="' + tags.url + '"> Download</a></span>';
+
+      videojs('my_video_1').src([
+        {
+        notSupportedMessage: "play",
+        type: 'application/x-mpegURL',
+        // poster: 'https://i.ytimg.com/vi/' + video_id + '/maxresdefault.jpg',
+        src: tags.manifest_url,
+        },
+      ]);
+
+      videojs('my_video_1').ready(function() {
+        this.hotkeys({
+          volumeStep: 0.1,
+          seekStep: 5,
+          enableModifiersForNumbers: false
+        });
+      });
+
     })
     .catch((err) => {
       throw err;

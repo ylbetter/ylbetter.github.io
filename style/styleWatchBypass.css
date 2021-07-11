@@ -1059,3 +1059,12 @@ BYPASS
 #ytplayer{
   border: 0;
 }
+
+.video-js, .my_video_1-dimensions {
+  width: 100% !important;
+  height: 99.9vh !important;
+}
+
+* {
+  outline: 0;
+}
